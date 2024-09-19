@@ -1,0 +1,559 @@
+
+> my-app@0.1.0 start
+> react-scripts start
+
+(node:196617) [DEP_WEBPACK_DEV_SERVER_ON_AFTER_SETUP_MIDDLEWARE] DeprecationWarning: 'onAfterSetupMiddleware' option is deprecated. Please use the 'setupMiddlewares' option.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+(node:196617) [DEP_WEBPACK_DEV_SERVER_ON_BEFORE_SETUP_MIDDLEWARE] DeprecationWarning: 'onBeforeSetupMiddleware' option is deprecated. Please use the 'setupMiddlewares' option.
+Starting the development server...
+
+Compiled successfully!
+
+You can now view my-app in the browser.
+
+  http://localhost:3000
+
+Note that the development build is not optimized.
+To create a production build, use npm run build.
+
+webpack compiled successfully
+Compiling...
+[0;33mOne of your dependencies, babel-preset-react-app, is importing the
+"@babel/plugin-proposal-private-property-in-object" package without
+declaring it in its dependencies. This is currently working because
+"@babel/plugin-proposal-private-property-in-object" is already in your
+node_modules folder for unrelated reasons, but it [1mmay break at any time[0;33m.
+
+babel-preset-react-app is part of the create-react-app project, [1mwhich
+is not maintianed anymore[0;33m. It is thus unlikely that this bug will
+ever be fixed. Add "@babel/plugin-proposal-private-property-in-object" to
+your devDependencies to work around this error. This will make this message
+go away.[0m
+  
+Failed to compile.
+
+Module not found: Error: Can't resolve './screens/AudioPlayer.js' in '/home/web/valkiria24-web-lemon/src'
+ERROR in ./src/Routes.js 14:0-51
+Module not found: Error: Can't resolve './screens/AudioPlayer.js' in '/home/web/valkiria24-web-lemon/src'
+
+webpack compiled with 1 error
+Compiling...
+Compiled successfully!
+webpack compiled successfully
+Compiling...
+Failed to compile.
+
+[eslint] 
+src/screens/AudioPlayer.js
+Syntax error: Unexpected token, expected "from" (2:0) (2:undefined)
+ERROR in ./src/screens/AudioPlayer.js
+Module build failed (from ./node_modules/babel-loader/lib/index.js):
+SyntaxError: /home/web/valkiria24-web-lemon/src/screens/AudioPlayer.js: Unexpected token, expected "from" (2:0)
+
+  1 | import asyncio
+> 2 | import websockets
+    | ^
+  3 | import socket
+  4 |
+  5 | # Server Configuration
+    at constructor (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:362:19)
+    at FlowParserMixin.raise (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:3260:19)
+    at FlowParserMixin.unexpected (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:3280:16)
+    at FlowParserMixin.expectContextual (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:3569:12)
+    at FlowParserMixin.parseImportSpecifiersAndAfter (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:13708:10)
+    at FlowParserMixin.parseImport (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:13700:17)
+    at FlowParserMixin.parseStatementContent (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:12347:27)
+    at FlowParserMixin.parseStatementLike (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:12239:17)
+    at FlowParserMixin.parseStatementLike (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:5051:24)
+    at FlowParserMixin.parseModuleItem (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:12216:17)
+    at FlowParserMixin.parseBlockOrModuleBlockBody (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:12792:36)
+    at FlowParserMixin.parseBlockBody (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:12785:10)
+    at FlowParserMixin.parseProgram (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:12113:10)
+    at FlowParserMixin.parseTopLevel (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:12103:25)
+    at FlowParserMixin.parseTopLevel (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:5818:28)
+    at FlowParserMixin.parse (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:13915:10)
+    at parse (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:13949:38)
+    at parser (/home/web/valkiria24-web-lemon/node_modules/@babel/core/lib/parser/index.js:41:34)
+    at parser.next (<anonymous>)
+    at normalizeFile (/home/web/valkiria24-web-lemon/node_modules/@babel/core/lib/transformation/normalize-file.js:64:37)
+    at normalizeFile.next (<anonymous>)
+    at run (/home/web/valkiria24-web-lemon/node_modules/@babel/core/lib/transformation/index.js:21:50)
+    at run.next (<anonymous>)
+    at transform (/home/web/valkiria24-web-lemon/node_modules/@babel/core/lib/transform.js:22:33)
+    at transform.next (<anonymous>)
+    at step (/home/web/valkiria24-web-lemon/node_modules/gensync/index.js:261:32)
+    at /home/web/valkiria24-web-lemon/node_modules/gensync/index.js:273:13
+    at async.call.result.err.err (/home/web/valkiria24-web-lemon/node_modules/gensync/index.js:223:11)
+
+ERROR in [eslint] 
+src/screens/AudioPlayer.js
+  Line 2:  Parsing error: Unexpected token, expected "from" (2:0)
+
+webpack compiled with 2 errors
+Compiling...
+Compiled successfully!
+webpack compiled successfully
+Compiling...
+Compiled successfully!
+webpack compiled successfully
+Compiling...
+Compiled successfully!
+webpack compiled successfully
+Compiling...
+Failed to compile.
+
+[eslint] 
+src/screens/AudioPlayer.js
+  Line 161:11:  'handleUserInteraction' is not defined  no-undef
+
+Search for the keywords to learn more about each error.
+ERROR in [eslint] 
+src/screens/AudioPlayer.js
+  Line 161:11:  'handleUserInteraction' is not defined  no-undef
+
+Search for the keywords to learn more about each error.
+
+webpack compiled with 1 error
+Compiling...
+Failed to compile.
+
+[eslint] 
+src/screens/AudioPlayer.js
+  Line 161:11:  'handleUserInteraction' is not defined  no-undef
+
+Search for the keywords to learn more about each error.
+ERROR in [eslint] 
+src/screens/AudioPlayer.js
+  Line 161:11:  'handleUserInteraction' is not defined  no-undef
+
+Search for the keywords to learn more about each error.
+
+webpack compiled with 1 error
+Compiling...
+Compiled successfully!
+webpack compiled successfully
+Compiling...
+Compiled successfully!
+webpack compiled successfully
+Compiling...
+Compiled successfully!
+webpack compiled successfully
+Compiling...
+Compiled successfully!
+webpack compiled successfully
+Compiling...
+Compiled successfully!
+webpack compiled successfully
+Compiling...
+Failed to compile.
+
+[eslint] 
+src/screens/ActiveServiceAdmin.js
+Syntax error: Unexpected token (67:8) (67:8)
+ERROR in ./src/screens/ActiveServiceAdmin.js
+Module build failed (from ./node_modules/babel-loader/lib/index.js):
+SyntaxError: /home/web/valkiria24-web-lemon/src/screens/ActiveServiceAdmin.js: Unexpected token (67:8)
+
+  65 |             'shell': true,
+  66 |             'startBack'
+> 67 |         };
+     |         ^
+  68 |         newSocket.emit('service_standard_send', additionalMethodsPayload);
+  69 |
+  70 |         // Clean up the socket connection when the component unmounts
+    at constructor (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:362:19)
+    at FlowParserMixin.raise (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:3260:19)
+    at FlowParserMixin.unexpected (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:3280:16)
+    at FlowParserMixin.parseObjPropValue (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:11498:21)
+    at FlowParserMixin.parseObjPropValue (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:5472:26)
+    at FlowParserMixin.parsePropertyDefinition (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:11437:17)
+    at FlowParserMixin.parseObjectLike (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:11352:21)
+    at FlowParserMixin.parseExprAtom (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:10869:23)
+    at FlowParserMixin.parseExprAtom (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:6815:20)
+    at FlowParserMixin.parseExprSubscripts (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:10584:23)
+    at FlowParserMixin.parseUpdate (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:10569:21)
+    at FlowParserMixin.parseMaybeUnary (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:10549:23)
+    at FlowParserMixin.parseMaybeUnaryOrPrivate (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:10403:61)
+    at FlowParserMixin.parseExprOps (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:10408:23)
+    at FlowParserMixin.parseMaybeConditional (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:10385:23)
+    at FlowParserMixin.parseMaybeAssign (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:10348:21)
+    at FlowParserMixin.parseMaybeAssign (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:5682:18)
+    at /home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:10318:39
+    at FlowParserMixin.allowInAnd (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:11928:16)
+    at FlowParserMixin.parseMaybeAssignAllowIn (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:10318:17)
+    at FlowParserMixin.parseVar (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:12860:91)
+    at FlowParserMixin.parseVarStatement (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:12706:10)
+    at FlowParserMixin.parseStatementContent (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:12322:23)
+    at FlowParserMixin.parseStatementLike (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:12239:17)
+    at FlowParserMixin.parseStatementLike (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:5051:24)
+    at FlowParserMixin.parseStatementListItem (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:12219:17)
+    at FlowParserMixin.parseBlockOrModuleBlockBody (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:12792:61)
+    at FlowParserMixin.parseBlockBody (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:12785:10)
+    at FlowParserMixin.parseBlock (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:12773:10)
+    at FlowParserMixin.parseFunctionBody (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:11618:24)
+    at /home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:5025:63
+    at FlowParserMixin.forwardNoArrowParamsConversionAt (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:5201:16)
+    at FlowParserMixin.parseFunctionBody (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:5025:12)
+    at FlowParserMixin.parseArrowExpression (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:11593:10)
+    at FlowParserMixin.parseParenAndDistinguishExpression (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:11207:12)
+    at FlowParserMixin.parseParenAndDistinguishExpression (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:5724:18)
+    at FlowParserMixin.parseExprAtom (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:10851:23)
+    at FlowParserMixin.parseExprAtom (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:6815:20)
+    at FlowParserMixin.parseExprSubscripts (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:10584:23)
+    at FlowParserMixin.parseUpdate (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:10569:21)
+    at FlowParserMixin.parseMaybeUnary (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:10549:23)
+    at FlowParserMixin.parseMaybeUnaryOrPrivate (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:10403:61)
+    at FlowParserMixin.parseExprOps (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:10408:23)
+    at FlowParserMixin.parseMaybeConditional (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:10385:23)
+    at FlowParserMixin.parseMaybeAssign (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:10348:21)
+    at FlowParserMixin.parseMaybeAssign (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:5682:18)
+    at /home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:10318:39
+    at FlowParserMixin.allowInAnd (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:11933:12)
+    at FlowParserMixin.parseMaybeAssignAllowIn (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:10318:17)
+    at FlowParserMixin.parseExprListItem (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:11693:18)
+
+ERROR in [eslint] 
+src/screens/ActiveServiceAdmin.js
+  Line 67:8:  Parsing error: Unexpected token (67:8)
+
+webpack compiled with 2 errors
+Compiling...
+Failed to compile.
+
+[eslint] 
+src/screens/ActiveServiceAdmin.js
+Syntax error: Unexpected token (67:8) (67:8)
+ERROR in ./src/screens/ActiveServiceAdmin.js
+Module build failed (from ./node_modules/babel-loader/lib/index.js):
+SyntaxError: /home/web/valkiria24-web-lemon/src/screens/ActiveServiceAdmin.js: Unexpected token (67:8)
+
+  65 |             'shell': true,
+  66 |             'startCallback'
+> 67 |         };
+     |         ^
+  68 |         newSocket.emit('service_standard_send', additionalMethodsPayload);
+  69 |
+  70 |         // Clean up the socket connection when the component unmounts
+    at constructor (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:362:19)
+    at FlowParserMixin.raise (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:3260:19)
+    at FlowParserMixin.unexpected (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:3280:16)
+    at FlowParserMixin.parseObjPropValue (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:11498:21)
+    at FlowParserMixin.parseObjPropValue (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:5472:26)
+    at FlowParserMixin.parsePropertyDefinition (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:11437:17)
+    at FlowParserMixin.parseObjectLike (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:11352:21)
+    at FlowParserMixin.parseExprAtom (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:10869:23)
+    at FlowParserMixin.parseExprAtom (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:6815:20)
+    at FlowParserMixin.parseExprSubscripts (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:10584:23)
+    at FlowParserMixin.parseUpdate (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:10569:21)
+    at FlowParserMixin.parseMaybeUnary (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:10549:23)
+    at FlowParserMixin.parseMaybeUnaryOrPrivate (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:10403:61)
+    at FlowParserMixin.parseExprOps (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:10408:23)
+    at FlowParserMixin.parseMaybeConditional (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:10385:23)
+    at FlowParserMixin.parseMaybeAssign (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:10348:21)
+    at FlowParserMixin.parseMaybeAssign (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:5682:18)
+    at /home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:10318:39
+    at FlowParserMixin.allowInAnd (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:11928:16)
+    at FlowParserMixin.parseMaybeAssignAllowIn (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:10318:17)
+    at FlowParserMixin.parseVar (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:12860:91)
+    at FlowParserMixin.parseVarStatement (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:12706:10)
+    at FlowParserMixin.parseStatementContent (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:12322:23)
+    at FlowParserMixin.parseStatementLike (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:12239:17)
+    at FlowParserMixin.parseStatementLike (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:5051:24)
+    at FlowParserMixin.parseStatementListItem (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:12219:17)
+    at FlowParserMixin.parseBlockOrModuleBlockBody (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:12792:61)
+    at FlowParserMixin.parseBlockBody (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:12785:10)
+    at FlowParserMixin.parseBlock (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:12773:10)
+    at FlowParserMixin.parseFunctionBody (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:11618:24)
+    at /home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:5025:63
+    at FlowParserMixin.forwardNoArrowParamsConversionAt (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:5201:16)
+    at FlowParserMixin.parseFunctionBody (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:5025:12)
+    at FlowParserMixin.parseArrowExpression (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:11593:10)
+    at FlowParserMixin.parseParenAndDistinguishExpression (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:11207:12)
+    at FlowParserMixin.parseParenAndDistinguishExpression (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:5724:18)
+    at FlowParserMixin.parseExprAtom (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:10851:23)
+    at FlowParserMixin.parseExprAtom (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:6815:20)
+    at FlowParserMixin.parseExprSubscripts (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:10584:23)
+    at FlowParserMixin.parseUpdate (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:10569:21)
+    at FlowParserMixin.parseMaybeUnary (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:10549:23)
+    at FlowParserMixin.parseMaybeUnaryOrPrivate (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:10403:61)
+    at FlowParserMixin.parseExprOps (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:10408:23)
+    at FlowParserMixin.parseMaybeConditional (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:10385:23)
+    at FlowParserMixin.parseMaybeAssign (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:10348:21)
+    at FlowParserMixin.parseMaybeAssign (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:5682:18)
+    at /home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:10318:39
+    at FlowParserMixin.allowInAnd (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:11933:12)
+    at FlowParserMixin.parseMaybeAssignAllowIn (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:10318:17)
+    at FlowParserMixin.parseExprListItem (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:11693:18)
+
+ERROR in [eslint] 
+src/screens/ActiveServiceAdmin.js
+  Line 67:8:  Parsing error: Unexpected token (67:8)
+
+webpack compiled with 2 errors
+Compiling...
+Failed to compile.
+
+[eslint] 
+src/screens/ActiveServiceAdmin.js
+Syntax error: Unexpected token (67:8) (67:8)
+ERROR in ./src/screens/ActiveServiceAdmin.js
+Module build failed (from ./node_modules/babel-loader/lib/index.js):
+SyntaxError: /home/web/valkiria24-web-lemon/src/screens/ActiveServiceAdmin.js: Unexpected token (67:8)
+
+  65 |             'shell': true,
+  66 |             'callbackOnStart'
+> 67 |         };
+     |         ^
+  68 |         newSocket.emit('service_standard_send', additionalMethodsPayload);
+  69 |
+  70 |         // Clean up the socket connection when the component unmounts
+    at constructor (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:362:19)
+    at FlowParserMixin.raise (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:3260:19)
+    at FlowParserMixin.unexpected (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:3280:16)
+    at FlowParserMixin.parseObjPropValue (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:11498:21)
+    at FlowParserMixin.parseObjPropValue (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:5472:26)
+    at FlowParserMixin.parsePropertyDefinition (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:11437:17)
+    at FlowParserMixin.parseObjectLike (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:11352:21)
+    at FlowParserMixin.parseExprAtom (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:10869:23)
+    at FlowParserMixin.parseExprAtom (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:6815:20)
+    at FlowParserMixin.parseExprSubscripts (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:10584:23)
+    at FlowParserMixin.parseUpdate (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:10569:21)
+    at FlowParserMixin.parseMaybeUnary (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:10549:23)
+    at FlowParserMixin.parseMaybeUnaryOrPrivate (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:10403:61)
+    at FlowParserMixin.parseExprOps (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:10408:23)
+    at FlowParserMixin.parseMaybeConditional (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:10385:23)
+    at FlowParserMixin.parseMaybeAssign (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:10348:21)
+    at FlowParserMixin.parseMaybeAssign (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:5682:18)
+    at /home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:10318:39
+    at FlowParserMixin.allowInAnd (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:11928:16)
+    at FlowParserMixin.parseMaybeAssignAllowIn (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:10318:17)
+    at FlowParserMixin.parseVar (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:12860:91)
+    at FlowParserMixin.parseVarStatement (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:12706:10)
+    at FlowParserMixin.parseStatementContent (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:12322:23)
+    at FlowParserMixin.parseStatementLike (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:12239:17)
+    at FlowParserMixin.parseStatementLike (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:5051:24)
+    at FlowParserMixin.parseStatementListItem (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:12219:17)
+    at FlowParserMixin.parseBlockOrModuleBlockBody (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:12792:61)
+    at FlowParserMixin.parseBlockBody (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:12785:10)
+    at FlowParserMixin.parseBlock (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:12773:10)
+    at FlowParserMixin.parseFunctionBody (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:11618:24)
+    at /home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:5025:63
+    at FlowParserMixin.forwardNoArrowParamsConversionAt (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:5201:16)
+    at FlowParserMixin.parseFunctionBody (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:5025:12)
+    at FlowParserMixin.parseArrowExpression (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:11593:10)
+    at FlowParserMixin.parseParenAndDistinguishExpression (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:11207:12)
+    at FlowParserMixin.parseParenAndDistinguishExpression (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:5724:18)
+    at FlowParserMixin.parseExprAtom (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:10851:23)
+    at FlowParserMixin.parseExprAtom (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:6815:20)
+    at FlowParserMixin.parseExprSubscripts (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:10584:23)
+    at FlowParserMixin.parseUpdate (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:10569:21)
+    at FlowParserMixin.parseMaybeUnary (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:10549:23)
+    at FlowParserMixin.parseMaybeUnaryOrPrivate (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:10403:61)
+    at FlowParserMixin.parseExprOps (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:10408:23)
+    at FlowParserMixin.parseMaybeConditional (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:10385:23)
+    at FlowParserMixin.parseMaybeAssign (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:10348:21)
+    at FlowParserMixin.parseMaybeAssign (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:5682:18)
+    at /home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:10318:39
+    at FlowParserMixin.allowInAnd (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:11933:12)
+    at FlowParserMixin.parseMaybeAssignAllowIn (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:10318:17)
+    at FlowParserMixin.parseExprListItem (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:11693:18)
+
+ERROR in [eslint] 
+src/screens/ActiveServiceAdmin.js
+  Line 67:8:  Parsing error: Unexpected token (67:8)
+
+webpack compiled with 2 errors
+Compiling...
+Failed to compile.
+
+[eslint] 
+src/screens/ActiveServiceAdmin.js
+Syntax error: Unexpected token (67:8) (67:8)
+ERROR in ./src/screens/ActiveServiceAdmin.js
+Module build failed (from ./node_modules/babel-loader/lib/index.js):
+SyntaxError: /home/web/valkiria24-web-lemon/src/screens/ActiveServiceAdmin.js: Unexpected token (67:8)
+
+  65 |             'shell': true,
+  66 |             'callbackOnStart':
+> 67 |         };
+     |         ^
+  68 |         newSocket.emit('service_standard_send', additionalMethodsPayload);
+  69 |
+  70 |         // Clean up the socket connection when the component unmounts
+    at constructor (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:362:19)
+    at FlowParserMixin.raise (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:3260:19)
+    at FlowParserMixin.unexpected (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:3280:16)
+    at FlowParserMixin.parseExprAtom (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:10968:16)
+    at FlowParserMixin.parseExprAtom (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:6815:20)
+    at FlowParserMixin.parseExprSubscripts (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:10584:23)
+    at FlowParserMixin.parseUpdate (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:10569:21)
+    at FlowParserMixin.parseMaybeUnary (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:10549:23)
+    at FlowParserMixin.parseMaybeUnaryOrPrivate (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:10403:61)
+    at FlowParserMixin.parseExprOps (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:10408:23)
+    at FlowParserMixin.parseMaybeConditional (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:10385:23)
+    at FlowParserMixin.parseMaybeAssign (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:10348:21)
+    at FlowParserMixin.parseMaybeAssign (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:5682:18)
+    at /home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:10318:39
+    at FlowParserMixin.allowInAnd (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:11933:12)
+    at FlowParserMixin.parseMaybeAssignAllowIn (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:10318:17)
+    at FlowParserMixin.parseObjectProperty (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:11472:83)
+    at FlowParserMixin.parseObjPropValue (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:11497:100)
+    at FlowParserMixin.parseObjPropValue (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:5472:26)
+    at FlowParserMixin.parsePropertyDefinition (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:11437:17)
+    at FlowParserMixin.parseObjectLike (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:11352:21)
+    at FlowParserMixin.parseExprAtom (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:10869:23)
+    at FlowParserMixin.parseExprAtom (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:6815:20)
+    at FlowParserMixin.parseExprSubscripts (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:10584:23)
+    at FlowParserMixin.parseUpdate (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:10569:21)
+    at FlowParserMixin.parseMaybeUnary (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:10549:23)
+    at FlowParserMixin.parseMaybeUnaryOrPrivate (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:10403:61)
+    at FlowParserMixin.parseExprOps (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:10408:23)
+    at FlowParserMixin.parseMaybeConditional (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:10385:23)
+    at FlowParserMixin.parseMaybeAssign (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:10348:21)
+    at FlowParserMixin.parseMaybeAssign (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:5682:18)
+    at /home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:10318:39
+    at FlowParserMixin.allowInAnd (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:11928:16)
+    at FlowParserMixin.parseMaybeAssignAllowIn (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:10318:17)
+    at FlowParserMixin.parseVar (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:12860:91)
+    at FlowParserMixin.parseVarStatement (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:12706:10)
+    at FlowParserMixin.parseStatementContent (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:12322:23)
+    at FlowParserMixin.parseStatementLike (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:12239:17)
+    at FlowParserMixin.parseStatementLike (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:5051:24)
+    at FlowParserMixin.parseStatementListItem (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:12219:17)
+    at FlowParserMixin.parseBlockOrModuleBlockBody (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:12792:61)
+    at FlowParserMixin.parseBlockBody (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:12785:10)
+    at FlowParserMixin.parseBlock (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:12773:10)
+    at FlowParserMixin.parseFunctionBody (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:11618:24)
+    at /home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:5025:63
+    at FlowParserMixin.forwardNoArrowParamsConversionAt (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:5201:16)
+    at FlowParserMixin.parseFunctionBody (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:5025:12)
+    at FlowParserMixin.parseArrowExpression (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:11593:10)
+    at FlowParserMixin.parseParenAndDistinguishExpression (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:11207:12)
+    at FlowParserMixin.parseParenAndDistinguishExpression (/home/web/valkiria24-web-lemon/node_modules/@babel/parser/lib/index.js:5724:18)
+
+ERROR in [eslint] 
+src/screens/ActiveServiceAdmin.js
+  Line 67:8:  Parsing error: Unexpected token (67:8)
+
+webpack compiled with 2 errors
+Compiling...
+Compiled with warnings.
+
+[eslint] 
+src/screens/ActiveServiceAdmin.js
+  Line 11:11:  'navigate' is assigned a value but never used                                                                  no-unused-vars
+  Line 77:8:   React Hook useEffect has a missing dependency: 'intervalId'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+Search for the keywords to learn more about each warning.
+To ignore, add // eslint-disable-next-line to the line before.
+
+WARNING in [eslint] 
+src/screens/ActiveServiceAdmin.js
+  Line 11:11:  'navigate' is assigned a value but never used                                                                  no-unused-vars
+  Line 77:8:   React Hook useEffect has a missing dependency: 'intervalId'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+webpack compiled with 1 warning
+Compiling...
+Compiled with warnings.
+
+[eslint] 
+src/screens/ActiveServiceAdmin.js
+  Line 11:11:  'navigate' is assigned a value but never used                                                                  no-unused-vars
+  Line 76:8:   React Hook useEffect has a missing dependency: 'intervalId'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+Search for the keywords to learn more about each warning.
+To ignore, add // eslint-disable-next-line to the line before.
+
+WARNING in [eslint] 
+src/screens/ActiveServiceAdmin.js
+  Line 11:11:  'navigate' is assigned a value but never used                                                                  no-unused-vars
+  Line 76:8:   React Hook useEffect has a missing dependency: 'intervalId'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+webpack compiled with 1 warning
+Compiling...
+Compiled with warnings.
+
+[eslint] 
+src/screens/ActiveServiceAdmin.js
+  Line 11:11:  'navigate' is assigned a value but never used                                                                  no-unused-vars
+  Line 76:8:   React Hook useEffect has a missing dependency: 'intervalId'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+Search for the keywords to learn more about each warning.
+To ignore, add // eslint-disable-next-line to the line before.
+
+WARNING in [eslint] 
+src/screens/ActiveServiceAdmin.js
+  Line 11:11:  'navigate' is assigned a value but never used                                                                  no-unused-vars
+  Line 76:8:   React Hook useEffect has a missing dependency: 'intervalId'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+webpack compiled with 1 warning
+Compiling...
+Compiled with warnings.
+
+[eslint] 
+src/screens/ActiveServiceAdmin.js
+  Line 11:11:   'navigate' is assigned a value but never used                                                                  no-unused-vars
+  Line 76:8:    React Hook useEffect has a missing dependency: 'intervalId'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+  Line 106:13:  'dto' is assigned a value but never used                                                                       no-unused-vars
+
+Search for the keywords to learn more about each warning.
+To ignore, add // eslint-disable-next-line to the line before.
+
+WARNING in [eslint] 
+src/screens/ActiveServiceAdmin.js
+  Line 11:11:   'navigate' is assigned a value but never used                                                                  no-unused-vars
+  Line 76:8:    React Hook useEffect has a missing dependency: 'intervalId'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+  Line 106:13:  'dto' is assigned a value but never used                                                                       no-unused-vars
+
+webpack compiled with 1 warning
+Compiling...
+Compiled with warnings.
+
+[eslint] 
+src/screens/ActiveServiceAdmin.js
+  Line 11:11:  'navigate' is assigned a value but never used                                                                  no-unused-vars
+  Line 76:8:   React Hook useEffect has a missing dependency: 'intervalId'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+Search for the keywords to learn more about each warning.
+To ignore, add // eslint-disable-next-line to the line before.
+
+WARNING in [eslint] 
+src/screens/ActiveServiceAdmin.js
+  Line 11:11:  'navigate' is assigned a value but never used                                                                  no-unused-vars
+  Line 76:8:   React Hook useEffect has a missing dependency: 'intervalId'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+webpack compiled with 1 warning
+Compiling...
+Compiled with warnings.
+
+[eslint] 
+src/screens/ActiveServiceAdmin.js
+  Line 11:11:  'navigate' is assigned a value but never used                                                                  no-unused-vars
+  Line 76:8:   React Hook useEffect has a missing dependency: 'intervalId'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+Search for the keywords to learn more about each warning.
+To ignore, add // eslint-disable-next-line to the line before.
+
+WARNING in [eslint] 
+src/screens/ActiveServiceAdmin.js
+  Line 11:11:  'navigate' is assigned a value but never used                                                                  no-unused-vars
+  Line 76:8:   React Hook useEffect has a missing dependency: 'intervalId'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+webpack compiled with 1 warning
+Compiling...
+Compiled with warnings.
+
+[eslint] 
+src/screens/ActiveServiceAdmin.js
+  Line 11:11:  'navigate' is assigned a value but never used                                                                  no-unused-vars
+  Line 76:8:   React Hook useEffect has a missing dependency: 'intervalId'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+Search for the keywords to learn more about each warning.
+To ignore, add // eslint-disable-next-line to the line before.
+
+WARNING in [eslint] 
+src/screens/ActiveServiceAdmin.js
+  Line 11:11:  'navigate' is assigned a value but never used                                                                  no-unused-vars
+  Line 76:8:   React Hook useEffect has a missing dependency: 'intervalId'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+webpack compiled with 1 warning

@@ -8,6 +8,7 @@ import BirdViewer from './screens/BirdViewer';
 import ActiveWorkers from './screens/ActiveWorkers.js';
 import ActiveWorkersAdmin from './screens/ActiveWorkersAdmin.js';
 import ActiveServiceAdmin from './screens/ActiveServiceAdmin.js';
+import AudioPlayer from './screens/AudioPlayer.js'
 import Header from './components/Header';
 import Footer from './components/Footer';
 
@@ -24,7 +25,7 @@ function AppRoutes() {
         <Route path="/active-workers" element={<ActiveWorkers />} />
         <Route path="/active-workers/:workerId" element={<ActiveWorkersAdmin />} />
         <Route path="/active-workers/:workerId/service/:serviceId" element={<ActiveServiceAdmin />} />
-
+        <Route path="/bird-listener" element={<AudioPlayer/>} />
       </Routes>
       <Footer />
     </Router>
