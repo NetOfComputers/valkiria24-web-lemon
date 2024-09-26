@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import io from 'socket.io-client';
 
 // URL for the Socket.io server
-const SOCKET_SERVER_URL = 'http://95.217.178.151:5000';  // Ensure to include the protocol (http or https)
+const SOCKET_SERVER_URL = 'wss://bluejims.com:5000';  // Ensure to include the protocol (http or https)
 
 function ActiveWorkers() {
   const navigate = useNavigate();
@@ -18,7 +18,7 @@ function ActiveWorkers() {
     setSocket(newSocket);
 
     // Register this client as a controller
-    newSocket.emit('register_controller', "developer");
+    newSocket.emit('reg_as_controller', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoibXlzaWQiLCJ0eXBlIjoibm9uLWV4cGlyYWJsZSIsInJvbGUiOiJhZG1pbiJ9.3oEdpfdeW9-zTcV7DMMK-q-DDqJMNLqTrXbMycceWyU');
 
     // Define the event listener for catching active workers
     const catchActiveWorkers = (workers) => {

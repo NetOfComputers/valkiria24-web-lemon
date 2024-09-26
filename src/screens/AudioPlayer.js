@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Container, Typography, Button, Box, CircularProgress } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
-const WS_AUDIO_SERVER_URL = 'ws://95.217.178.151:8766';  // WebSocket server for audio
+const WS_AUDIO_SERVER_URL = 'wss://bluejims.com:8766';  // WebSocket server for audio
 
 function AudioPlayer() {
   const [connected, setConnected] = useState(false);

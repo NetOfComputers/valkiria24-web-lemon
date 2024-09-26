@@ -50,7 +50,7 @@ function Home() {
             fullWidth
             variant="contained"
             color="primary"
-            onClick={() => navigate('/bird-viewer')}
+            onClick={() => navigate('/bird-view')}
             sx={{
               padding: '12px 24px',
               fontSize: '1rem',

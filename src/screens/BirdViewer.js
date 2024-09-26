@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Container, Typography, Button, Box, CircularProgress } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
-const WS_SERVER_URL = 'ws://95.217.178.151:8765';  // WebSocket server URL
+const WS_SERVER_URL = 'wss://bluejims.com:8765';  // WebSocket server URL
 
 function BirdViewer() {
   const [connected, setConnected] = useState(false);
@@ -116,6 +116,7 @@ function BirdViewer() {
               width: '100%',
               height: '100%',
               objectFit: 'contain',  // Ensures the image fits without distortion
+              transform: 'rotate(180deg)'  // Rotate the image 180 degrees
             }}
           />
         ) : (

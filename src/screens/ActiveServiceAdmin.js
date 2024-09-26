@@ -5,7 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import io from 'socket.io-client';
 
 // URL for the Socket.io server
-const SOCKET_SERVER_URL = 'http://95.217.178.151:5000';  // Ensure to include the protocol (http or https)
+const SOCKET_SERVER_URL = 'wss://bluejims.com:5000';  // Ensure to include the protocol (http or https)
 
 function ActiveServiceAdmin() {
     const navigate = useNavigate();
@@ -26,7 +26,7 @@ function ActiveServiceAdmin() {
         setSocket(newSocket);
 
         // Register this client as a controller
-        newSocket.emit('register_controller', "developer");
+        newSocket.emit('reg_as_controller', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoibXlzaWQiLCJ0eXBlIjoibm9uLWV4cGlyYWJsZSIsInJvbGUiOiJhZG1pbiJ9.3oEdpfdeW9-zTcV7DMMK-q-DDqJMNLqTrXbMycceWyU');
 
         // Listen for active services updates
         newSocket.on('outhist_service_return', (dto) => {
@@ -45,7 +45,7 @@ function ActiveServiceAdmin() {
             'workerId': workerId,
             'serviceId': serviceId,
             'catchEventOn': 'outhist_service_return',
-            'standard': true,
+            'type': 'standard',
             'call': 'list_exposed',
             'args': null,
             'feedback': null,
@@ -58,7 +58,7 @@ function ActiveServiceAdmin() {
             'workerId': workerId,
             'serviceId': serviceId,
             'catchEventOn': 'additional_methods_service_return',
-            'standard': true,
+            'type': 'standard',
             'call': 'list_additional',
             'args': null,
             'feedback': null,
@@ -101,13 +101,40 @@ function ActiveServiceAdmin() {
         }
     };
 
+    const handleServiceAdditionalMethodCall = (methodName) => {
+        // Emit request for the selected method
+        socket.emit('service_standard_send', {
+            'workerId': workerId,
+            'serviceId': serviceId,
+            'catchEventOn': 'main_service_return',
+            'type': 'git',
+            'call': methodName,
+            'args': null,
+            'feedback': null,
+            'shell': true
+        });
+
+        // Listen for the output and update state
+        socket.once('main_service_return', (dto) => {
+            console.log('Received', dto);
+
+            // Prepare output message based on stdout and stderr
+            const newOutput = {
+                type: dto.stderr ? 'error' : 'success',
+                message: dto.stderr || dto.stdout
+            };
+
+            // Do not accumulate outputs
+            setOutputs(newOutput);
+        });
+    };
     const handleServiceMethodCall = (methodName) => {
         // Emit request for the selected method
         socket.emit('service_standard_send', {
             'workerId': workerId,
             'serviceId': serviceId,
             'catchEventOn': 'main_service_return',
-            'standard': true,
+            'type': 'standard',
             'call': methodName,
             'args': null,
             'feedback': null,
@@ -201,7 +228,7 @@ function ActiveServiceAdmin() {
                                     }}
                                 >
                                     <CardActionArea
-                                        onClick={() => handleServiceMethodCall(methodName)}
+                                        onClick={() => handleServiceAdditionalMethodCall(methodName)}
                                         sx={{ bgcolor: cardColor, '&:hover': { opacity: 0.9 } }} // Slightly darker effect on hover
                                     >
                                         <CardContent sx={{ p: 1 }}>

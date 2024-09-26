@@ -1,24 +1,27 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Typography, Card, CardContent, CardActionArea, Grid } from '@mui/material';
+import { Container, Typography, Card, CardContent, CardActionArea, Grid, Paper, Box, Button, TextField, IconButton, Collapse } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
 import io from 'socket.io-client';
 
 // URL for the Socket.io server
-const SOCKET_SERVER_URL = 'http://95.217.178.151:5000';  // Ensure to include the protocol (http or https)
+const SOCKET_SERVER_URL = 'wss://bluejims.com:5000';  // Ensure to include the protocol (http or https)
 
 function ActiveWorkersAdmin() {
   const navigate = useNavigate();
   const { workerId } = useParams();
   const [socket, setSocket] = useState(null);
   const [activeServices, setActiveServices] = useState([]);
-
+  const [additionalMethods, setAdditionalMethods] = useState([]);
+  const [showAdditionalMethods, setShowAdditionalMethods] = useState(false); // State to control showing additional methods
+  const [advancedMode, setAdvancedMode] = useState(false); // State to control showing advanced mode
+  const [outputs, setOutputs] = useState([]); // State for storing output messages
   useEffect(() => {
     // Create a connection to the socket.io server
     const newSocket = io(SOCKET_SERVER_URL);
     setSocket(newSocket);
 
     // Register this client as a controller
-    newSocket.emit('register_controller', "developer");
+    newSocket.emit('reg_as_controller', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoibXlzaWQiLCJ0eXBlIjoibm9uLWV4cGlyYWJsZSIsInJvbGUiOiJhZG1pbiJ9.3oEdpfdeW9-zTcV7DMMK-q-DDqJMNLqTrXbMycceWyU');
 
     // Define the event listener for catching active services
     const catchActiveServices = (services) => {
@@ -32,6 +35,35 @@ function ActiveWorkersAdmin() {
     // Request the list of active services
     newSocket.emit('get_active_services', workerId);
 
+
+
+
+
+    newSocket.on('worker_methods_return', (dto) => {
+      console.log('avaliable methods', dto['stdout'])
+
+      console.warn('Hardcoded Code !!')
+
+      setAdditionalMethods(dto['stdout'])
+    })
+
+    const workerMethods = {
+      'workerId': workerId,
+      'serviceId': null,
+      'catchEventOn': 'worker_methods_return',
+      'type': 'standard',
+      'call': 'list_worker_methods',
+      'args': null,
+      'feedback': null,
+      'shell': true
+    };
+    newSocket.emit('worker_standard_send', workerMethods);
+
+
+
+
+
+
     // Clean up the socket connection when the component unmounts
     return () => {
       newSocket.disconnect();
@@ -41,6 +73,34 @@ function ActiveWorkersAdmin() {
   const handleServiceClick = (serviceId) => {
     // Navigate to the admin interface for the clicked worker
     navigate(`/active-workers/${workerId}/service/${serviceId}`);
+  };
+  const handleWorkerOperation = (type, methodName) => {
+    
+    // Emit request for the selected method
+    socket.emit('worker_standard_send', {
+      'workerId': workerId,
+      'serviceId': 'serviceId',
+      'catchEventOn': 'main_worker_return',
+      'type': type,
+      'call': methodName,
+      'args': null,
+      'feedback': null,
+      'shell': true
+    });
+
+    // Listen for the output and update state
+    socket.once('main_worker_return', (dto) => {
+      console.log('Received', dto);
+
+      // Prepare output message based on stdout and stderr
+      const newOutput = {
+        type: dto.stderr ? 'error' : 'success',
+        message: dto.stderr || dto.stdout
+      };
+
+      // Do not accumulate outputs
+      setOutputs(newOutput);
+    });
   };
 
   return (
@@ -71,6 +131,98 @@ function ActiveWorkersAdmin() {
           </Grid>
         ))}
       </Grid>
+
+
+      {/* Display output */}
+      <Box mt={4} style={{ maxHeight: '400px', overflowY: 'auto' }}>
+        <Typography variant="h6" gutterBottom>
+          Output
+        </Typography>
+        <Paper elevation={3} style={{ padding: 16, backgroundColor: '#333' }}>
+          {outputs && (
+            <Typography
+              variant="body2"
+              component="pre"
+              style={{ color: outputs.type === 'error' ? 'red' : 'lightgreen' }}
+            >
+              {outputs.message}
+            </Typography>
+          )}
+        </Paper>
+      </Box>
+      {/* Toggle Additional Methods */}
+      <Box mt={4}>
+        <Button
+          variant="contained"
+          color="#BAE1FF" sx={{
+            bgcolor: "#BAE1FF"
+          }}
+          onClick={() => setShowAdditionalMethods(!showAdditionalMethods)}
+        >
+          {showAdditionalMethods ? 'Hide Additional Methods' : 'Show Additional Methods'}
+        </Button>
+      </Box>
+
+      {/* Display additional methods if toggled */}
+
+      <Collapse in={showAdditionalMethods}>
+        <Grid container spacing={1} mt={1}>
+          {additionalMethods.map(({methodName, type}) => {
+            // Define a pastel color palette
+            const pastelColors = [
+              '#FFB3BA', // Pastel pink
+              '#FFDFBA', // Pastel orange
+              '#FFFFBA', // Pastel yellow
+              '#BAFFC9', // Pastel green
+              '#BAE1FF', // Pastel blue
+              '#D6BAFF', // Pastel purple
+              '#C4E0E5', // Pastel teal
+              '#F2D8C2', // Pastel beige
+            ];
+
+            // Use modulo operator to cycle through colors
+            // const cardColor = pastelColors[index % pastelColors.length];
+            const cardColor = pastelColors[pastelColors.length];
+
+            return (
+              <Grid item xs={6} sm={4} md={3} lg={2} key={methodName}>
+                <Card
+                  sx={{
+                    maxWidth: 200,
+                    minWidth: 120,
+                    mx: 'auto',
+                    bgcolor: cardColor,
+                    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+                    borderRadius: 2,
+                  }}
+                >
+                  <CardActionArea
+                    onClick={() => handleWorkerOperation(type, methodName)}
+                    sx={{ bgcolor: cardColor, '&:hover': { opacity: 0.9 } }} // Slightly darker effect on hover
+                  >
+                    <CardContent sx={{ p: 1 }}>
+                      <Typography
+                        variant="h6"
+                        component="div"
+                        align="center"
+                        sx={{ color: '#333333' }} // Darker text color for contrast
+                      >
+                        {methodName}
+                      </Typography>
+                    </CardContent>
+                  </CardActionArea>
+                </Card>
+              </Grid>
+            );
+          })}
+        </Grid>
+      </Collapse>
+
+
+
+
+
+
     </Container>
   );
 }
