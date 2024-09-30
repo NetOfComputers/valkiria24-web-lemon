@@ -39,7 +39,7 @@ function Home() {
             margin: 'auto',
           }}
         >
-          This web is hosted by JaimeRoman. Explore our services to learn more.
+          This web is hosted by JaimeRoman. Explore our services to learn more. Lemonado 24
         </Typography>
       </Box>
 
