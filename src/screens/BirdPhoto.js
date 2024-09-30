@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Container, Typography, Button, Box, TextField, Snackbar } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
@@ -17,6 +17,37 @@ function BirdPhoto() {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [photoUrl, setPhotoUrl] = useState('');
   const navigate = useNavigate();
+  const wsRef = useRef(null); // Use ref to hold WebSocket instance
+
+  // Set up WebSocket connection on component mount
+  useEffect(() => {
+    wsRef.current = new WebSocket(WS_SERVER_URL);
+    wsRef.current.binaryType = 'arraybuffer'; // Handle binary data as ArrayBuffer
+
+    wsRef.current.onmessage = (event) => {
+      const blob = new Blob([event.data], { type: 'image/jpeg' }); // Assuming JPEG
+      const url = URL.createObjectURL(blob);
+      setPhotoUrl(url);
+      setLoading(false);
+      setSnackbarOpen(true); // Show snackbar after receiving photo
+    };
+
+    wsRef.current.onerror = (error) => {
+      console.error('WebSocket error:', error);
+      setLoading(false);
+    };
+
+    wsRef.current.onclose = () => {
+      console.log('WebSocket closed');
+    };
+
+    // Clean up the WebSocket connection on component unmount
+    return () => {
+      if (wsRef.current) {
+        wsRef.current.close();
+      }
+    };
+  }, []);
 
   // Function to handle parameter changes
   const handleChange = (e) => {
@@ -28,35 +59,12 @@ function BirdPhoto() {
   };
 
   // Function to request a photo
-  const requestPhoto = async () => {
+  const requestPhoto = () => {
     setLoading(true);
-    try {
-      const ws = new WebSocket(WS_SERVER_URL);
-      ws.binaryType = 'arraybuffer'; // Handle binary data as ArrayBuffer
-
-      ws.onopen = () => {
-        ws.send(JSON.stringify(params)); // Send the parameters as a JSON string
-      };
-
-      ws.onmessage = (event) => {
-        const blob = new Blob([event.data], { type: 'image/jpeg' }); // Assuming JPEG
-        const url = URL.createObjectURL(blob);
-        setPhotoUrl(url);
-        setLoading(false);
-        setSnackbarOpen(true); // Show snackbar after receiving photo
-        ws.close(); // Close the WebSocket connection after receiving the photo
-      };
-
-      ws.onerror = (error) => {
-        console.error('WebSocket error:', error);
-        setLoading(false);
-      };
-
-      ws.onclose = () => {
-        console.log('WebSocket closed');
-      };
-    } catch (error) {
-      console.error('Error requesting photo:', error);
+    if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
+      wsRef.current.send(JSON.stringify(params)); // Send the parameters as a JSON string
+    } else {
+      console.error('WebSocket is not open.'); // Handle case when WebSocket is not open
       setLoading(false);
     }
   };

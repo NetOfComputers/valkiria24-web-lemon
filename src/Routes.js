@@ -13,6 +13,9 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import BirdView from './screens/BirdView.js';
 import BirdViewAdmin from './screens/BirdViewAdmin.js';
+import BirdViewToken from './screens/BirdViewToken.js';
+import BirdPhoto from './screens/BirdPhoto.js';
+import BirdViewSocketio from './screens/BirdViewSocketio.js';
 
 function AppRoutes() {
   return (
@@ -29,6 +32,9 @@ function AppRoutes() {
         <Route path="/active-workers/:workerId/service/:serviceId" element={<ActiveServiceAdmin />} />
         <Route path="/bird-listener" element={<AudioPlayer/>} />
         <Route path="/bird-view" element={<BirdView/>} />
+        <Route path="/bird-view-socketio" element={<BirdViewSocketio/>} />
+        <Route path="/bird-photo" element={<BirdPhoto/>} />
+        <Route path="/bird-view/:token" element={<BirdViewToken/>} />
         <Route path="/bird-view-admin" element={<BirdViewAdmin/>} />
       </Routes>
       <Footer />

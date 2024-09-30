@@ -1,0 +1,348 @@
+import React, { useEffect, useRef, useState } from 'react';
+import { Container, Typography, Button, Box, CircularProgress, IconButton } from '@mui/material';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
+import { useNavigate } from 'react-router-dom';
+
+const WS_VIDEO_SERVER_URL = 'wss://bluejims.com:8765';
+const WS_VIDEO_CONTROL_SERVER_URL = 'wss://bluejims.com:8764';
+const WS_AUDIO_SERVER_URL = 'wss://bluejims.com:8766';
+
+function BirdView() {
+  const [connectedVideo, setConnectedVideo] = useState(false);
+  const [connectedVideoControl, setConnectedVideoControl] = useState(false);
+  const [connectedAudio, setConnectedAudio] = useState(false);
+  const [playingAudio, setPlayingAudio] = useState(false);
+  const [deviceIndex, setDeviceIndex] = useState(0);
+  const [brightness, setBrightness] = useState(1); // Default brightness at 1 (normal)
+  const [isRecording, setIsRecording] = useState(false);
+
+  const imageRef = useRef(null);
+  const wsVideoRef = useRef(null);
+  const wsVideoControlRef = useRef(null);
+  const wsAudioRef = useRef(null);
+  const audioContextRef = useRef(null);
+  const navigate = useNavigate();
+
+  // WebSocket for video control
+  useEffect(() => {
+    wsVideoControlRef.current = new WebSocket(WS_VIDEO_CONTROL_SERVER_URL);
+
+    wsVideoControlRef.current.onopen = () => {
+      console.log('WebSocket for videoControl connected');
+      setConnectedVideoControl(true);
+    };
+
+    wsVideoControlRef.current.onclose = (event) => {
+      console.log('WebSocket for videoControl disconnected', event);
+      setConnectedVideoControl(false);
+    };
+
+    wsVideoControlRef.current.onerror = (error) => {
+      console.error('WebSocket for videoControl error:', error);
+    };
+
+    wsVideoControlRef.current.onmessage = (event) => {
+      console.log('Received message at videoControl', event);
+    };
+
+    return () => {
+      if (wsVideoControlRef.current) {
+        wsVideoControlRef.current.close();
+      }
+    };
+  }, []);
+
+  const sendControlMessage = (action, value) => {
+    if (wsVideoControlRef.current && wsVideoControlRef.current.readyState === WebSocket.OPEN) {
+      const message = JSON.stringify({ action, value });
+      console.log('sending', message)
+      wsVideoControlRef.current.send(message);
+    }
+  };
+
+  const handleDeviceIndexChange = (change) => {
+    const newIndex = deviceIndex + change;
+    setDeviceIndex(newIndex);
+    sendControlMessage('deviceIndex', newIndex);
+  };
+
+  const handleBrightnessChange = (change) => {
+    const newBrightness = Math.max(0.1, Math.min(brightness + change, 2)); // Keep brightness between 0.1 and 2
+    setBrightness(newBrightness);
+    sendControlMessage('brightness', newBrightness);
+  };
+
+  const handleStartRecording = () => {
+    setIsRecording(true);
+    sendControlMessage('startRecording', true);
+  };
+
+  const handleStopRecording = () => {
+    setIsRecording(false);
+    sendControlMessage('stopRecording', true);
+  };
+
+  // WebSocket for video stream (same as before)
+  useEffect(() => {
+    wsVideoRef.current = new WebSocket(WS_VIDEO_SERVER_URL);
+    wsVideoRef.current.binaryType = 'arraybuffer';
+
+    wsVideoRef.current.onopen = () => {
+      console.log('WebSocket for video connected');
+      setConnectedVideo(true);
+    };
+
+    wsVideoRef.current.onclose = (event) => {
+      console.log('WebSocket for video disconnected', event);
+      setConnectedVideo(false);
+    };
+
+    wsVideoRef.current.onerror = (error) => {
+      console.error('WebSocket for video error:', error);
+    };
+
+    wsVideoRef.current.onmessage = (event) => {
+      try {
+        const arrayBuffer = event.data;
+        const blob = new Blob([arrayBuffer], { type: 'image/jpeg' });
+        const url = URL.createObjectURL(blob);
+
+        if (imageRef.current) {
+          imageRef.current.src = url;
+          setTimeout(() => URL.revokeObjectURL(url), 10000);
+        }
+      } catch (e) {
+        console.error('Error handling video WebSocket message:', e);
+      }
+    };
+
+    return () => {
+      if (wsVideoRef.current) {
+        wsVideoRef.current.close();
+      }
+    };
+  }, []);
+
+  // WebSocket for audio stream (same as before)
+  useEffect(() => {
+    wsAudioRef.current = new WebSocket(WS_AUDIO_SERVER_URL);
+    wsAudioRef.current.binaryType = 'arraybuffer';
+
+    audioContextRef.current = new (window.AudioContext || window.webkitAudioContext)();
+
+    wsAudioRef.current.onopen = () => {
+      console.log('WebSocket for audio connected');
+      setConnectedAudio(true);
+    };
+
+    wsAudioRef.current.onclose = (event) => {
+      console.log('WebSocket for audio disconnected', event);
+      setConnectedAudio(false);
+      setPlayingAudio(false);
+    };
+
+    wsAudioRef.current.onerror = (error) => {
+      console.error('WebSocket for audio error:', error);
+    };
+
+    wsAudioRef.current.onmessage = async (event) => {
+      try {
+        if (!(event.data instanceof ArrayBuffer)) {
+          throw new Error('Expected ArrayBuffer');
+        }
+
+        const audioData = event.data;
+        const audioBuffer = await audioContextRef.current.decodeAudioData(audioData);
+
+        const source = audioContextRef.current.createBufferSource();
+        source.buffer = audioBuffer;
+        source.connect(audioContextRef.current.destination);
+        source.start(0);
+        setPlayingAudio(true);
+      } catch (e) {
+        console.error('Error handling audio WebSocket message:', e);
+      }
+    };
+
+    return () => {
+      if (wsAudioRef.current) {
+        wsAudioRef.current.close();
+      }
+      if (audioContextRef.current) {
+        audioContextRef.current.close();
+      }
+    };
+  }, []);
+
+  return (
+    <Container
+      maxWidth="md"
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        minHeight: '100vh',
+        padding: '2rem',
+        backgroundColor: '#f0f0f0',
+        textAlign: 'center',
+      }}
+    >
+      <Box mb={3}>
+        <Typography
+          variant="h2"
+          sx={{
+            fontWeight: 'bold',
+            fontSize: { xs: '2rem', sm: '3rem' },
+            color: '#333',
+          }}
+        >
+          Bird View Video, Audio & Control
+        </Typography>
+        <Typography
+          variant="body1"
+          sx={{
+            fontSize: '1.25rem',
+            color: '#666',
+            maxWidth: '600px',
+            margin: 'auto',
+          }}
+        >
+          View live video and listen to audio of your "perejiles" online.
+        </Typography>
+      </Box>
+
+      {/* Display the video */}
+      <Box
+        sx={{
+          width: '100%',
+          height: '500px',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: '#fff',
+          borderRadius: '8px',
+          overflow: 'hidden',
+          boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',
+          mb: 4,
+        }}
+      >
+        {connectedVideo ? (
+          <img
+            ref={imageRef}
+            alt="Bird Viewer"
+            style={{
+              width: '100%',
+              height: '100%',
+              objectFit: 'contain',
+              filter: `brightness(${brightness})`,
+            }}
+          />
+        ) : (
+          <Box display="flex" alignItems="center" flexDirection="column">
+            <CircularProgress />
+            <Typography variant="body1" color="error" mt={2}>
+              Connecting to WebSocket for video...
+            </Typography>
+          </Box>
+        )}
+      </Box>
+
+      {/* Device Index Controls */}
+      <Box mb={2}>
+        <IconButton onClick={() => handleDeviceIndexChange(-1)}>
+          <ArrowBackIcon />
+        </IconButton>
+        <Typography variant="h6" display="inline" sx={{ mx: 2 }}>
+          Device Index: {deviceIndex}
+        </Typography>
+        <IconButton onClick={() => handleDeviceIndexChange(1)}>
+          <ArrowForwardIcon />
+        </IconButton>
+      </Box>
+
+      {/* Brightness Controls */}
+      <Box mb={2}>
+        <IconButton onClick={() => handleBrightnessChange(-0.1)}>
+          <Brightness4Icon />
+        </IconButton>
+        <Typography variant="h6" display="inline" sx={{ mx: 2 }}>
+          Brightness
+        </Typography>
+        <IconButton onClick={() => handleBrightnessChange(0.1)}>
+          <Brightness7Icon />
+        </IconButton>
+      </Box>
+
+      {/* Recording Controls */}
+      <Box mb={2}>
+        {isRecording ? (
+          <Button variant="contained" color="error" onClick={handleStopRecording}>
+            Stop Recording
+          </Button>
+        ) : (
+          <Button variant="contained" color="primary" onClick={handleStartRecording}>
+            Start Recording
+          </Button>
+        )}
+      </Box>
+
+      {/* Display the audio status */}
+      <Box
+        sx={{
+          width: '100%',
+          height: '100px',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: '#fff',
+          borderRadius: '8px',
+          overflow: 'hidden',
+          boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',
+          mb: 4,
+        }}
+      >
+        {connectedAudio ? (
+          playingAudio ? (
+            <Typography variant="h5" color="success">
+              Audio is playing...
+            </Typography>
+          ) : (
+            <Typography variant="h5" color="warning">
+              Waiting for audio stream...
+            </Typography>
+          )
+        ) : (
+          <Box display="flex" alignItems="center" flexDirection="column">
+            <CircularProgress />
+            <Typography variant="body1" color="error" mt={2}>
+              Connecting to WebSocket for audio...
+            </Typography>
+          </Box>
+        )}
+      </Box>
+
+      {/* Admin button */}
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={() => navigate('/bird-viewer-admin')}
+        sx={{
+          padding: '12px 24px',
+          fontSize: '1rem',
+          backgroundColor: '#000',
+          '&:hover': {
+            backgroundColor: '#333',
+          },
+        }}
+      >
+        Go to Admin
+      </Button>
+    </Container>
+  );
+}
+
+export default BirdView;
