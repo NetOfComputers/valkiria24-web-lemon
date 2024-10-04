@@ -26,7 +26,7 @@ function ActiveServiceAdmin() {
         setSocket(newSocket);
 
         // Register this client as a controller
-        newSocket.emit('reg_as_controller', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoibXlzaWQiLCJ0eXBlIjoibm9uLWV4cGlyYWJsZSIsInJvbGUiOiJhZG1pbiJ9.3oEdpfdeW9-zTcV7DMMK-q-DDqJMNLqTrXbMycceWyU');
+        newSocket.emit('reg_as_controller', localStorage.getItem('hash'));
 
         // Listen for active services updates
         newSocket.on('outhist_service_return', (dto) => {
@@ -79,7 +79,7 @@ function ActiveServiceAdmin() {
         if (isPolling) return; // Prevent starting multiple intervals
         const id = setInterval(() => {
             handleServiceMethodCall('outhist');
-        }, 15000); // Execute every 15 seconds
+        }, 2000); // Execute every 2 seconds
 
         setIntervalId(id);
         setIsPolling(true);

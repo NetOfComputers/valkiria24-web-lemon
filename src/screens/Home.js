@@ -14,8 +14,21 @@ function Home() {
         alignItems: 'center',
         justifyContent: 'center',
         minHeight: '100vh',
-        backgroundColor: '#f4f4f4', // Light background for modern look
+        background: 'linear-gradient(45deg, #700255, #24019f)', // Gradient background
+        backgroundSize: '400% 400%', // Allow the background to shift
+        animation: 'gradient 15s ease infinite', // Animation for smooth transition
         padding: '2rem',
+        '@keyframes gradient': {
+          '0%': {
+            backgroundPosition: '0% 50%',
+          },
+          '50%': {
+            backgroundPosition: '100% 50%',
+          },
+          '100%': {
+            backgroundPosition: '0% 50%',
+          },
+        },
       }}
     >
       <Box textAlign="center" mb={4}>
@@ -24,7 +37,7 @@ function Home() {
           sx={{
             fontWeight: 'bold',
             fontSize: { xs: '2rem', sm: '3rem' }, // Responsive font size
-            color: '#000',
+            color: '#fff', // Change text color to white for better contrast
             mb: 2,
           }}
         >
@@ -34,12 +47,12 @@ function Home() {
           variant="body1"
           sx={{
             fontSize: '1.25rem',
-            color: '#555',
+            color: '#eee', // Slightly lighter text color for better readability
             maxWidth: '500px',
             margin: 'auto',
           }}
         >
-          This web is hosted by JaimeRoman. Explore our services to learn more. Lemonado 24
+          Made by Jaime Roman. Appreciate
         </Typography>
       </Box>
 
@@ -63,7 +76,8 @@ function Home() {
             View Birds
           </Button>
         </Grid>
-        <Grid item xs={12} sm={6}>
+        {/* Uncomment this section if you want to include it */}
+        {/* <Grid item xs={12} sm={6}>
           <Button
             fullWidth
             variant="outlined"
@@ -82,8 +96,29 @@ function Home() {
           >
             Active Workers
           </Button>
-        </Grid>
+        </Grid> */}
       </Grid>
+
+      {/* New section for "Are you admin?" link */}
+      <Box mt={4} textAlign="center">
+        {/* <Typography variant="body1" sx={{ color: '#eee' }}>
+          Are you admin?
+        </Typography> */}
+        <Typography
+          variant="body1"
+          sx={{
+            color: 'whitesmoke', // Blue link
+            textDecoration: 'underline',
+            cursor: 'pointer',
+            '&:hover': {
+              color: '#0056b3', // Darker blue on hover
+            },
+          }}
+          onClick={() => navigate('/admin')}
+        >
+          Are you admin?
+        </Typography>
+      </Box>
     </Container>
   );
 }

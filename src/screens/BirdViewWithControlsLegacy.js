@@ -1,16 +1,36 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Container, Typography, Button, Box, CircularProgress, IconButton } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import Brightness4Icon from '@mui/icons-material/Brightness4';
-import Brightness7Icon from '@mui/icons-material/Brightness7';
+import {
+  Container,
+  Box,
+  Typography,
+  IconButton,
+  CircularProgress,
+  Button,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+} from '@mui/material';
+import {
+  ArrowBack,
+  ArrowForward,
+  Brightness4 as Brightness4Icon,
+  Brightness7 as Brightness7Icon,
+  Fullscreen as FullscreenIcon,
+  FullscreenExit as FullscreenExitIcon,
+  Settings as SettingsIcon,
+} from '@mui/icons-material';
+
+
 import { useNavigate } from 'react-router-dom';
 
 const WS_VIDEO_SERVER_URL = 'wss://bluejims.com:8765';
 const WS_VIDEO_CONTROL_SERVER_URL = 'wss://bluejims.com:8764';
 const WS_AUDIO_SERVER_URL = 'wss://bluejims.com:8766';
 
-function BirdView() {
+function BirdViewControls() {
   const [connectedVideo, setConnectedVideo] = useState(false);
   const [connectedVideoControl, setConnectedVideoControl] = useState(false);
   const [connectedAudio, setConnectedAudio] = useState(false);
@@ -18,14 +38,32 @@ function BirdView() {
   const [deviceIndex, setDeviceIndex] = useState(0);
   const [brightness, setBrightness] = useState(1); // Default brightness at 1 (normal)
   const [isRecording, setIsRecording] = useState(false);
-
+  const [settingsOpen, setSettingsOpen] = useState(false);
   const imageRef = useRef(null);
   const wsVideoRef = useRef(null);
   const wsVideoControlRef = useRef(null);
   const wsAudioRef = useRef(null);
   const audioContextRef = useRef(null);
   const navigate = useNavigate();
+  const handleFullscreenToggle = () => {
+    if (!document.fullscreenElement) {
+      // Request full-screen mode on the video container
+      imageRef.current.parentNode.requestFullscreen();
+    } else {
+      // Exit full-screen mode
+      document.exitFullscreen();
+    }
+  };
+  const handleSettingsOpen = () => {
+    if (document.fullscreenElement) {
+      document.exitFullscreen();
+    }
+    setSettingsOpen(true);
+  };
 
+  const handleSettingsClose = () => {
+    setSettingsOpen(false);
+  };
   // WebSocket for video control
   useEffect(() => {
     wsVideoControlRef.current = new WebSocket(WS_VIDEO_CONTROL_SERVER_URL);
@@ -64,17 +102,23 @@ function BirdView() {
   };
 
   const handleDeviceIndexChange = (change) => {
+    //This is unnecesxary
     const newIndex = deviceIndex + change;
     setDeviceIndex(newIndex);
-    sendControlMessage('deviceIndex', newIndex);
+
+
+    sendControlMessage('deviceIndex', change);
   };
 
+  const handleRescaleValueChange = (change) => {
+    sendControlMessage('rescale', change);
+  };
   const handleBrightnessChange = (change) => {
-    const newBrightness = Math.max(0.1, Math.min(brightness + change, 2)); // Keep brightness between 0.1 and 2
-    setBrightness(newBrightness);
-    sendControlMessage('brightness', newBrightness);
+    sendControlMessage('brightness', change);
   };
-
+  const handleChangeFps = (change) => {
+    sendControlMessage('fps', change);
+  };
   const handleStartRecording = () => {
     setIsRecording(true);
     sendControlMessage('startRecording', true);
@@ -126,7 +170,6 @@ function BirdView() {
     };
   }, []);
 
-  // WebSocket for audio stream (same as before)
   useEffect(() => {
     wsAudioRef.current = new WebSocket(WS_AUDIO_SERVER_URL);
     wsAudioRef.current.binaryType = 'arraybuffer';
@@ -177,6 +220,7 @@ function BirdView() {
     };
   }, []);
 
+
   return (
     <Container
       maxWidth="md"
@@ -200,7 +244,7 @@ function BirdView() {
             color: '#333',
           }}
         >
-          Bird View Video, Audio & Control
+          BIRD VIEWER
         </Typography>
         <Typography
           variant="body1"
@@ -214,82 +258,6 @@ function BirdView() {
           View live video and listen to audio of your "perejiles" online.
         </Typography>
       </Box>
-
-      {/* Display the video */}
-      <Box
-        sx={{
-          width: '100%',
-          height: '500px',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          backgroundColor: '#fff',
-          borderRadius: '8px',
-          overflow: 'hidden',
-          boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',
-          mb: 4,
-        }}
-      >
-        {connectedVideo ? (
-          <img
-            ref={imageRef}
-            alt="Bird Viewer"
-            style={{
-              width: '100%',
-              height: '100%',
-              objectFit: 'contain',
-              filter: `brightness(${brightness})`,
-            }}
-          />
-        ) : (
-          <Box display="flex" alignItems="center" flexDirection="column">
-            <CircularProgress />
-            <Typography variant="body1" color="error" mt={2}>
-              Connecting to WebSocket for video...
-            </Typography>
-          </Box>
-        )}
-      </Box>
-
-      {/* Device Index Controls */}
-      <Box mb={2}>
-        <IconButton onClick={() => handleDeviceIndexChange(-1)}>
-          <ArrowBackIcon />
-        </IconButton>
-        <Typography variant="h6" display="inline" sx={{ mx: 2 }}>
-          Device Index: {deviceIndex}
-        </Typography>
-        <IconButton onClick={() => handleDeviceIndexChange(1)}>
-          <ArrowForwardIcon />
-        </IconButton>
-      </Box>
-
-      {/* Brightness Controls */}
-      <Box mb={2}>
-        <IconButton onClick={() => handleBrightnessChange(-0.1)}>
-          <Brightness4Icon />
-        </IconButton>
-        <Typography variant="h6" display="inline" sx={{ mx: 2 }}>
-          Brightness
-        </Typography>
-        <IconButton onClick={() => handleBrightnessChange(0.1)}>
-          <Brightness7Icon />
-        </IconButton>
-      </Box>
-
-      {/* Recording Controls */}
-      <Box mb={2}>
-        {isRecording ? (
-          <Button variant="contained" color="error" onClick={handleStopRecording}>
-            Stop Recording
-          </Button>
-        ) : (
-          <Button variant="contained" color="primary" onClick={handleStartRecording}>
-            Start Recording
-          </Button>
-        )}
-      </Box>
-
       {/* Display the audio status */}
       <Box
         sx={{
@@ -324,25 +292,182 @@ function BirdView() {
           </Box>
         )}
       </Box>
-
-      {/* Admin button */}
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={() => navigate('/bird-viewer-admin')}
+      {/* Display the video */}
+      <Box
         sx={{
-          padding: '12px 24px',
-          fontSize: '1rem',
-          backgroundColor: '#000',
-          '&:hover': {
-            backgroundColor: '#333',
-          },
+          position: 'relative',
+          width: '100%',
+          height: '500px',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: '#fff',
+          borderRadius: '8px',
+          overflow: 'hidden',
+          boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',
+          mb: 4,
         }}
       >
-        Go to Admin
-      </Button>
+        {/* Left Arrow */}
+        <IconButton
+          onClick={() => handleDeviceIndexChange(-1)}
+          sx={{
+            position: 'absolute',
+            left: '10px',
+            top: '50%',
+            transform: 'translateY(-50%)',
+            zIndex: 2,
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            color: '#fff',
+            '&:hover': {
+              backgroundColor: 'rgba(0, 0, 0, 0.7)',
+            },
+          }}
+        >
+          <ArrowBack />
+        </IconButton>
+
+        {/* Video */}
+        {connectedVideo ? (
+          <img
+            ref={imageRef}
+            alt="Bird Viewer"
+            style={{
+              width: '100%',
+              height: '100%',
+              objectFit: 'contain',
+              filter: `brightness(${brightness})`,
+            }}
+          />
+        ) : (
+          <Box display="flex" alignItems="center" flexDirection="column">
+            <CircularProgress />
+            <Typography variant="body1" color="error" mt={2}>
+              Connecting to WebSocket for video...
+            </Typography>
+          </Box>
+        )}
+
+        {/* Right Arrow */}
+        <IconButton
+          onClick={() => handleDeviceIndexChange(1)}
+          sx={{
+            position: 'absolute',
+            right: '10px',
+            top: '50%',
+            transform: 'translateY(-50%)',
+            zIndex: 2,
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            color: '#fff',
+            '&:hover': {
+              backgroundColor: 'rgba(0, 0, 0, 0.7)',
+            },
+          }}
+        >
+          <ArrowForward />
+        </IconButton>
+
+        {/* Fullscreen Button */}
+        <IconButton
+          onClick={handleFullscreenToggle}
+          sx={{
+            position: 'absolute',
+            bottom: '10px',
+            right: '30px',
+            zIndex: 2,
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            color: '#fff',
+            '&:hover': {
+              backgroundColor: 'rgba(0, 0, 0, 0.7)',
+            },
+          }}
+        >
+          {document.fullscreenElement ? <FullscreenExitIcon /> : <FullscreenIcon />}
+        </IconButton>
+
+        {/* Settings Button */}
+        <IconButton
+          onClick={handleSettingsOpen}
+          sx={{
+            position: 'absolute',
+            bottom: '10px',
+            right: '78px',
+            zIndex: 2,
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            color: '#fff',
+            '&:hover': {
+              backgroundColor: 'rgba(0, 0, 0, 0.7)',
+            },
+          }}
+        >
+          <SettingsIcon />
+        </IconButton>
+      </Box>
+
+      {/* Settings Dialog */}
+      <Dialog open={settingsOpen} onClose={handleSettingsClose}>
+        <DialogTitle>Settings</DialogTitle>
+        <DialogContent>
+          {/* Device rescale factor Controls */}
+          <Box mb={2}>
+            <IconButton onClick={() => handleRescaleValueChange(-0.1)}>
+              <ArrowBackIcon />
+            </IconButton>
+            <Typography variant="h6" display="inline" sx={{ mx: 2 }}>
+              Rescale Factor: Unknown
+            </Typography>
+            <IconButton onClick={() => handleRescaleValueChange(0.1)}>
+              <ArrowForwardIcon />
+            </IconButton>
+          </Box>
+
+          {/* Device fps Controls */}
+          <Box mb={2}>
+            <IconButton onClick={() => handleChangeFps(-5)}>
+              <ArrowBackIcon />
+            </IconButton>
+            <Typography variant="h6" display="inline" sx={{ mx: 2 }}>
+              Fps: Unknown
+            </Typography>
+            <IconButton onClick={() => handleChangeFps(5)}>
+              <ArrowForwardIcon />
+            </IconButton>
+          </Box>
+
+          {/* Brightness Controls */}
+          <Box mb={2}>
+            <IconButton onClick={() => handleBrightnessChange(-6)}>
+              <Brightness4Icon />
+            </IconButton>
+            <Typography variant="h6" display="inline" sx={{ mx: 2 }}>
+              Brightness
+            </Typography>
+            <IconButton onClick={() => handleBrightnessChange(6)}>
+              <Brightness7Icon />
+            </IconButton>
+          </Box>
+
+          {/* Recording Controls */}
+          {/* <Box mb={2}>
+            {isRecording ? (
+              <Button variant="contained" color="error" onClick={handleStopRecording}>
+                Stop Recording
+              </Button>
+            ) : (
+              <Button variant="contained" color="primary" onClick={handleStartRecording}>
+                Start Recording
+              </Button>
+            )}
+          </Box> */}
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleSettingsClose} color="primary">
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Container>
   );
-}
+};
 
-export default BirdView;
+export default BirdViewControls;

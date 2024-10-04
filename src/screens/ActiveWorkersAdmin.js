@@ -21,7 +21,7 @@ function ActiveWorkersAdmin() {
     setSocket(newSocket);
 
     // Register this client as a controller
-    newSocket.emit('reg_as_controller', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoibXlzaWQiLCJ0eXBlIjoibm9uLWV4cGlyYWJsZSIsInJvbGUiOiJhZG1pbiJ9.3oEdpfdeW9-zTcV7DMMK-q-DDqJMNLqTrXbMycceWyU');
+    newSocket.emit('reg_as_controller', localStorage.getItem('hash'));
 
     // Define the event listener for catching active services
     const catchActiveServices = (services) => {

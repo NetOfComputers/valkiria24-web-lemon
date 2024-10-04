@@ -1,6 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Container, Typography, Button, Box, CircularProgress } from '@mui/material';
+import { Container, Typography, Button, Box, CircularProgress, Grid } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import BirdViewNav from '../components/BirdViewNav';
+
+// import BirdViewMainNavigation from './nav/BirdViewMainNavigation.js';
+
 
 const WS_VIDEO_SERVER_URL = 'wss://bluejims.com:8765';  // WebSocket server for video
 const WS_AUDIO_SERVER_URL = 'wss://bluejims.com:8766';  // WebSocket server for audio
@@ -10,7 +14,7 @@ function BirdView() {
   const [connectedVideo, setConnectedVideo] = useState(false);
   const [connectedAudio, setConnectedAudio] = useState(false);
   const [playingAudio, setPlayingAudio] = useState(false);
-  
+
   // References
   const imageRef = useRef(null);  // To display video images
   const wsVideoRef = useRef(null);  // WebSocket for video
@@ -220,9 +224,9 @@ function BirdView() {
           </Box>
         )}
       </Box>
-
+      {/* <BirdViewNav navItems={BirdViewMainNavigation.bird_view_screen}></BirdViewNav> */}
       {/* Admin button */}
-      <Button
+      {/* <Button
         variant="contained"
         color="primary"
         onClick={() => navigate('/bird-viewer-admin')}
@@ -236,7 +240,7 @@ function BirdView() {
         }}
       >
         Go to Admin
-      </Button>
+      </Button> */}
     </Container>
   );
 }
