@@ -1,13 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Container, Box, Typography, CircularProgress } from '@mui/material';
 import AudioStatus from './modules/AudioStatus';
-import VideoPlayer from './modules/VideoPlayer';
+import VideoPlayer from './modules/VideoPlayerLegacy';
 import SettingsDialog from './modules/SettingsDialog';
 import { useNavigate } from 'react-router-dom';
 // import { WS_VIDEO_SERVER_URL, WS_VIDEO_CONTROL_SERVER_URL, WS_AUDIO_SERVER_URL } from './constants';
 const WS_VIDEO_SERVER_URL = 'wss://bluejims.com:8765';
 const WS_VIDEO_CONTROL_SERVER_URL = 'wss://bluejims.com:8764';
 const WS_AUDIO_SERVER_URL = 'wss://bluejims.com:8766';
+
 function BirdViewControls() {
   const [connectedVideo, setConnectedVideo] = useState(false);
   const [connectedVideoControl, setConnectedVideoControl] = useState(false);
@@ -212,7 +213,7 @@ function BirdViewControls() {
       <Box mb={3}>
         <Typography variant="h2" sx={titleStyles}>BIRD VIEWER</Typography>
         <Typography variant="body1" sx={subTitleStyles}>
-          View live video and listen to audio of your "perejiles" online.
+          Lots of birds to see! Enjoy the view and control the camera.
         </Typography>
       </Box>
 
@@ -227,6 +228,7 @@ function BirdViewControls() {
         handleStartRecording={handleStartRecording}
         handleStopRecording={handleStopRecording}
         onSettingsOpen={handleSettingsOpen}
+        handleFullscreenToggle={handleFullscreenToggle}
       />
 
       {/* Settings Dialog */}

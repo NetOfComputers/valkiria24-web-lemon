@@ -44,8 +44,8 @@ function AppRoutes() {
 
 
         {/* BIRD PROJECT */}
-        {/* let this temporaly as outdated aps can still redirect here */}
-        <Route path="/bird-view" element={<BirdViewControls />} />
+        {/* Redirect now to the very new fragmented code*/}
+        <Route path="/bird-view" element={<BirdViewWithControlsScreen />} />
 
         <Route path="/bird-view-controls" element={<BirdViewWithControlsScreen />} />
         <Route path="/bird-view-controls-legacy" element={<BirdViewControls />} />
