@@ -203,7 +203,7 @@ function BirdViewControls() {
         wsVideoRef.current.close();
       }
     };
-  }, []);
+  }, [imageRef]);
 
   
 

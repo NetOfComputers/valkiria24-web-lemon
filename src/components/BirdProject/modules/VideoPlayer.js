@@ -71,7 +71,7 @@ const VideoPlayer = ({ connectedVideo, imageRef, onSettingsOpen, sendControlMess
       {connectedVideo ? (
         <>
         <img ref={imageRef} alt="Live stream" style={videoStyles} />
-        <canvas ref={canvasRef} width={640} height={480} style={{ border: '1px solid black' }} />
+
         {/* <video ref={videoRef} style={{ display: 'none' }} /> */}
         </>
       ) : (
@@ -102,6 +102,7 @@ const VideoPlayer = ({ connectedVideo, imageRef, onSettingsOpen, sendControlMess
       <IconButton onClick={onSettingsOpen} sx={settingsButtonStyles}>
         <SettingsIcon />
       </IconButton>
+      <canvas ref={canvasRef} width={640} height={480} style={{ border: '1px solid black', display:'None' }} />
     </Box>
   );
 };
