@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Box, IconButton, CircularProgress, Typography } from '@mui/material';
 import ArrowBack from '@mui/icons-material/ArrowBack';
 import ArrowForward from '@mui/icons-material/ArrowForward';
@@ -10,7 +10,8 @@ import StopIcon from '@mui/icons-material/Stop';
 
 const VideoPlayer = ({ connectedVideo, imageRef, onSettingsOpen, sendControlMessage }) => {
   const [isRecording, setIsRecording] = useState(false);
-
+  const canvasRef = useRef(null);
+  const videoRef = useRef(null);
   const handleFullscreenToggle = () => {
     // Fullscreen logic
   };
@@ -23,6 +24,32 @@ const VideoPlayer = ({ connectedVideo, imageRef, onSettingsOpen, sendControlMess
     setIsRecording((prev) => !prev);
     // Lógica para empezar o detener la grabación
   };
+  useEffect(() => {
+    const canvas = canvasRef.current;
+
+    // Check if canvasRef is available
+    if (canvas) {
+      const context = canvas.getContext('2d');
+
+
+        const drawImage = () => {
+        if (imageRef.current) {
+            context.drawImage(imageRef.current, 0, 0, canvas.width, canvas.height);
+        }
+        requestAnimationFrame(drawImage); // Continuously draw
+        };
+
+        // Start drawing on the canvas if connected
+        if (connectedVideo) {
+        drawImage();
+        }
+            // Cleanup on unmount
+        return () => {
+            cancelAnimationFrame(drawImage);
+        };
+    }
+
+  }, [connectedVideo, imageRef]); // Re-run the effect if these dependencies change
 
   // Actualización de estilos del botón de grabación basados en el estado
   const recordButtonStyles = {
@@ -42,7 +69,11 @@ const VideoPlayer = ({ connectedVideo, imageRef, onSettingsOpen, sendControlMess
       </IconButton>
 
       {connectedVideo ? (
+        <>
         <img ref={imageRef} alt="Live stream" style={videoStyles} />
+        <canvas ref={canvasRef} width={640} height={480} style={{ border: '1px solid black' }} />
+        {/* <video ref={videoRef} style={{ display: 'none' }} /> */}
+        </>
       ) : (
         <Box display="flex" alignItems="center" flexDirection="column">
           <CircularProgress />
