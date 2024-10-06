@@ -191,7 +191,6 @@ function BirdViewControls() {
 
         if (imageRef.current) {
           imageRef.current.src = url;
-          setFrames((prevFrames) => [...prevFrames, url]);
           setTimeout(() => URL.revokeObjectURL(url), 10000);
         }
       } catch (e) {
@@ -205,71 +204,7 @@ function BirdViewControls() {
       }
     };
   }, []);
-  const generateVideo = () => {
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
 
-    // Assuming all images are of the same size, set the canvas size to the size of the images
-    const img = new Image();
-    img.src = frames[0];
-    img.onload = () => {
-      canvas.width = img.width;
-      canvas.height = img.height;
-
-      // Create a video file
-      const videoChunks = [];
-
-      // Function to draw frames on the canvas
-      const drawFrame = (src, index) => {
-        return new Promise((resolve) => {
-          const img = new Image();
-          img.src = src;
-          img.onload = () => {
-            ctx.drawImage(img, 0, 0);
-            // Convert the canvas to a blob
-            canvas.toBlob((blob) => {
-              videoChunks.push(blob);
-              resolve();
-            }, 'video/webm');
-          };
-        });
-      };
-
-      // Draw all frames sequentially
-      const drawFrames = async () => {
-        for (const frame of frames) {
-          await drawFrame(frame);
-        }
-
-        // Create a video blob
-        const videoBlob = new Blob(videoChunks, { type: 'video/webm' });
-        const videoUrl = URL.createObjectURL(videoBlob);
-
-        // Create a link to download the video
-        const link = document.createElement('a');
-        link.href = videoUrl;
-        link.download = 'output.webm';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        URL.revokeObjectURL(videoUrl); // Clean up the URL
-      };
-
-      drawFrames();
-    };
-  };
-  const handleRecordingToggle = () => {
-    setIsRecording((prev) => !prev);
-  
-    if (!isRecording) {
-      console.log('stop recording');
-      handleStopRecording();
-      generateVideo(); // Generate and download the video when stopping
-    } else {
-      console.log('start recording');
-      handleStartRecording();
-    }
-  };
   
 
   return (
