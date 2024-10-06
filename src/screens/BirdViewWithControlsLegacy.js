@@ -331,12 +331,13 @@ function BirdViewControls() {
         {connectedVideo ? (
           <img
             ref={imageRef}
-            alt="Bird Viewer"
+            alt=""
             style={{
               width: '100%',
               height: '100%',
               objectFit: 'contain',
               filter: `brightness(${brightness})`,
+              transform: 'rotate(180deg)', // This adds the rotation
             }}
           />
         ) : (

@@ -34,8 +34,8 @@ function AppRoutes() {
 
         {/* COMMON SITE */}
         <Route path="/admin" element={<AdminLogin />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
+        <Route path="/about" element={<ActiveWorkers />} />
+        <Route path="/contact" element={<AdminLogin />} />
 
         {/* ADMIN ONLY */}
         <Route path="/active-workers" element={<ActiveWorkers />} />
@@ -45,7 +45,7 @@ function AppRoutes() {
 
         {/* BIRD PROJECT */}
         {/* let this temporaly as outdated aps can still redirect here */}
-        <Route path="/bird-view" element={<BirdViewWithControlsScreen />} />
+        <Route path="/bird-view" element={<BirdViewControls />} />
 
         <Route path="/bird-view-controls" element={<BirdViewWithControlsScreen />} />
         <Route path="/bird-view-controls-legacy" element={<BirdViewControls />} />
@@ -60,7 +60,7 @@ function AppRoutes() {
         {/* <Route path="/bird-view/:token" element={<BirdViewToken/>} />
         <Route path="/bird-view-admin" element={<BirdViewAdmin/>} /> */}
       </Routes>
-      <Footer />
+      <Footer flexGrow={1}/>
     </Router>
   );
 }
