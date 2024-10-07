@@ -1,19 +1,25 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Typography, Button, Box, Grid } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 import birdGif from '../media/bird2.gif'; // Import your bird GIF
-
+/**
+ * La idea es crear un componente para poder introducir una clave y con ella crear tu propio pájaro
+ * @returns 
+ */
 function Home() {
   const initialWidth = useRef(window.innerWidth);
   const navigate = useNavigate();
   const resetDelay = 10000; // 10 seconds delay before bird starts again
+  const [labelsVisible, setLabelsVisible] = useState(true);
   const [birdGroups, setBirdGroups] = useState({
     periquitos: {
       birds: [
-        { x: -200, y: 100, delay: 0, speed: 5, isVisible: false, timeRemaining: resetDelay / 1000, name: 'Jim' },
-        { x: -300, y: 200, delay: 500, speed: 8, isVisible: false, timeRemaining: resetDelay / 1000, name: 'Pollo' },
-        { x: -400, y: 150, delay: 1000, speed: 4, isVisible: false, timeRemaining: resetDelay / 1000, name: 'Blue' },
-        { x: -500, y: 250, delay: 1500, speed: 6, isVisible: false, timeRemaining: resetDelay / 1000, name: 'Pipa' },
+        { x: -200, y: 100, delay: 0, speed: 5, isVisible: false, timeRemaining: resetDelay / 1000, name: 'Jim', class: 'periquito_special' },
+        { x: -300, y: 200, delay: 500, speed: 8, isVisible: false, timeRemaining: resetDelay / 1000, name: 'Pollo', class: 'periquito' },
+        { x: -400, y: 150, delay: 1000, speed: 4, isVisible: false, timeRemaining: resetDelay / 1000, name: 'Blue', class: 'periquito' },
+        { x: -500, y: 250, delay: 1500, speed: 6, isVisible: false, timeRemaining: resetDelay / 1000, name: 'Pipa', class: 'periquito' },
+        { x: -500, y: 250, delay: 1500, speed: 16, isVisible: false, timeRemaining: resetDelay / 1000, name: '¿¿More Soon??', class: 'periquito' },
       ]
     }
   });
@@ -46,7 +52,7 @@ function Home() {
         setBirdGroups((prevBirdGroups) => {
           const updatedBirds = prevBirdGroups.periquitos.birds.map((b, i) => {
             if (i === index) {
-              
+
               if (b.x >= initialWidth.current) {
                 // console.log('used window size', initialWidth);
                 // When the bird goes off-screen, reset its position and start the countdown
@@ -96,11 +102,17 @@ function Home() {
   }, []);
 
   const handleMouseEnter = (bird) => {
-    setTooltip({ visible: true, name: bird.name, x: bird.x + 50, y: bird.y }); // Position the tooltip to the right of the bird
+    // Immediately set the tooltip position based on the bird's current position when hovered
+    // setTooltip({
+    //   visible: true,
+    //   name: bird.name,
+    //   x: bird.x + 50, // Tooltip position will be slightly offset to the right of the bird
+    //   y: bird.y
+    // });
   };
 
   const handleMouseLeave = () => {
-    setTooltip({ visible: false, name: '', x: 0, y: 0 });
+    // setTooltip({ visible: false, name: '', x: 0, y: 0 });
   };
 
   return (
@@ -127,21 +139,40 @@ function Home() {
         <Box key={index}>
           {bird.isVisible ? (
             // Bird is visible and moving
-            <Box
-              onMouseEnter={() => handleMouseEnter(bird)}
-              onMouseLeave={handleMouseLeave}
-              sx={{
-                position: 'absolute',
-                top: `${bird.y}px`,  // Bird's vertical position
-                left: `${bird.x}px`, // Bird's horizontal position (changing over time)
-                width: '100px', // Adjust the bird's size as needed
-                height: '100px',
-                backgroundImage: `url(${birdGif})`, // Use bird GIF as background image
-                backgroundSize: 'cover',
-                transform: 'scaleX(-1)', // Flip bird horizontally if needed
-                transition: 'left 0.05s linear',  // Smooth movement
-              }}
-            />
+            <>
+              <Box
+                onMouseEnter={() => handleMouseEnter(bird)}
+                onMouseLeave={handleMouseLeave}
+                sx={{
+                  position: 'absolute',
+                  top: `${bird.y}px`,  // Bird's vertical position
+                  left: `${bird.x}px`, // Bird's horizontal position (changing over time)
+                  width: '100px', // Adjust the bird's size as needed
+                  height: '100px',
+                  backgroundImage: `url(${birdGif})`, // Use bird GIF as background image
+                  backgroundSize: 'cover',
+                  transform: 'scaleX(-1)', // Flip bird horizontally if needed
+                  transition: 'left 0.05s linear',  // Smooth movement
+                  filter: `invert(${bird.class === 'periquito' ? 0 : 1})`, // Invert colors for dark birds
+                }}
+              />
+              {labelsVisible && (
+                <Box
+                  sx={{
+                    position: 'absolute',
+                    top: `${bird.y}px`,
+                    left: `${bird.x}px`,
+                    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                    color: 'white',
+                    padding: '5px',
+                    borderRadius: '5px',
+                    zIndex: 10,
+                  }}
+                >
+                  {bird.name}
+                </Box>
+              )}
+            </>
           ) : (
             // Bird is not visible, display time remaining
             <Box
@@ -164,22 +195,22 @@ function Home() {
       ))}
 
       {/* Tooltip for displaying bird names */}
-      {tooltip.visible && (
-        <Box
-          sx={{
-            position: 'absolute',
-            top: `${tooltip.y}px`,
-            left: `${tooltip.x}px`,
-            backgroundColor: 'rgba(0, 0, 0, 0.8)',
-            color: 'white',
-            padding: '5px',
-            borderRadius: '5px',
-            zIndex: 10,
-          }}
-        >
-          {tooltip.name}
-        </Box>
-      )}
+      {/* {tooltip.visible && ( */}
+      <Box
+        sx={{
+          position: 'absolute',
+          top: `${tooltip.y}px`,
+          left: `${tooltip.x}px`,
+          backgroundColor: 'rgba(0, 0, 0, 0.8)',
+          color: 'white',
+          padding: '5px',
+          borderRadius: '5px',
+          zIndex: 10,
+        }}
+      >
+        {tooltip.name}
+      </Box>
+      {/* )} */}
 
       <Box textAlign="center" mb={4} sx={{ zIndex: 1 }}>
         <Typography
@@ -247,6 +278,23 @@ function Home() {
           Are you admin?
         </Typography>
       </Box>
+
+
+      <Button
+        variant="contained"
+        color="secondary"
+        onClick={() => setLabelsVisible((prev) => !prev)}
+        sx={{
+          position: 'absolute',
+          top: '70px', // Adjust for spacing
+          right: '16px', // Adjust for spacing
+          zIndex: 10,
+          backgroundColor: 'transparent',
+        }}
+      >
+        {labelsVisible ? <Visibility /> : <VisibilityOff />}
+      </Button>
+
     </Box>
   );
 }
