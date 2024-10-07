@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Typography, Button, Box, Grid } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import birdGif from '../media/bird2.gif'; // Import your bird GIF
 
 function Home() {
+  const initialWidth = useRef(window.innerWidth);
   const navigate = useNavigate();
   const resetDelay = 10000; // 10 seconds delay before bird starts again
   const [birdGroups, setBirdGroups] = useState({
@@ -34,12 +35,20 @@ function Home() {
         });
       }, bird.delay);
 
+      //Preserve  the window size
+      window.addEventListener('resize', () => {
+        // console.log('Window resized', window.innerWidth);
+        initialWidth.current = window.innerWidth;
+      });
+
       // Start interval to move birds according to their speed
       return setInterval(() => {
         setBirdGroups((prevBirdGroups) => {
           const updatedBirds = prevBirdGroups.periquitos.birds.map((b, i) => {
             if (i === index) {
-              if (b.x >= window.innerWidth) {
+              
+              if (b.x >= initialWidth.current) {
+                // console.log('used window size', initialWidth);
                 // When the bird goes off-screen, reset its position and start the countdown
                 return { ...b, isVisible: false, x: -200, timeRemaining: resetDelay / 1000 };
               }
