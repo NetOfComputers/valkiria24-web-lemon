@@ -3,27 +3,105 @@ import { Typography, Button, Box, Grid } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import birdGif from '../media/bird2.gif'; // Import your bird GIF
+
+//Create a bird?
+
+
+
+
+
+
+
+
+
+
+
 /**
  * La idea es crear un componente para poder introducir una clave y con ella crear tu propio pájaro
  * @returns 
  */
 function Home() {
   const initialWidth = useRef(window.innerWidth);
+  const initialHeight = useRef(window.innerHeight);
   const navigate = useNavigate();
-  const resetDelay = 10000; // 10 seconds delay before bird starts again
+  const resetDelay = 2000; // 10 seconds delay before bird starts again
   const [labelsVisible, setLabelsVisible] = useState(true);
+
+  const b1 = './bird_position/1b.gif';
+  const b2 = './bird_position/2b.gif';
+  const b3 = './bird_position/3b.gif';
+  const b4 = './bird_position/4b.gif';
+  const b5 = './bird_position/5b.gif';
+  const b6 = './bird_position/6b.gif';
+  const b7 = './bird_position/7b.gif';
+  const b8 = './bird_position/8b.gif';
+  const birdPositions = [
+    b1, b2, b3, b4, b5, b6, b7, b8
+  ]
+  const minRandomSpeed = 0;
+  const maxRandomSpeed = 0;
+  const maxRandomHeight = 0;
+  const minRandomHeight = 0;
+
+  const getRandomHeight = () => {
+    return Math.random() * ((initialHeight.current / 1.5) - 100) + 100
+  }
+  const getRandomDelay = () => {
+    return Math.random() * ((2000 - 0) + 0)
+  }
+  const getRandomSpeed = () => {
+    return (Math.random() * (12 - 6) + 6) * 0.75;
+  }
+  
+  const getRandomScale = () => {
+    return Math.floor(Math.random() * (80 - 40 + 1)) + 80
+  }
+
+  const getRandomGif = () => {
+    return birdPositions[Math.floor(Math.random() * (1 - 8 + 1)) + 8]
+  }
+
   const [birdGroups, setBirdGroups] = useState({
     periquitos: {
       birds: [
-        { x: -200, y: 100, delay: 0, speed: 5, isVisible: false, timeRemaining: resetDelay / 1000, name: 'Jim', class: 'periquito_special' },
-        { x: -300, y: 200, delay: 500, speed: 8, isVisible: false, timeRemaining: resetDelay / 1000, name: 'Pollo', class: 'periquito' },
-        { x: -400, y: 150, delay: 1000, speed: 4, isVisible: false, timeRemaining: resetDelay / 1000, name: 'Blue', class: 'periquito' },
-        { x: -500, y: 250, delay: 1500, speed: 6, isVisible: false, timeRemaining: resetDelay / 1000, name: 'Pipa', class: 'periquito' },
-        { x: -500, y: 250, delay: 1500, speed: 16, isVisible: false, timeRemaining: resetDelay / 1000, name: '¿¿More Soon??', class: 'periquito' },
+        // { x: -200, y: 100, delay: 0, speed: 5*0.75, isVisible: false, timeRemaining: resetDelay / 1000, name: 'Jim', class: 'periquito_special', scale: 100},
+        // { x: -200, y: 100, delay: 0, speed: 5*0.75, isVisible: false, timeRemaining: resetDelay / 1000, name: 'Jim', class: 'periquito_special', scale: 100 },
+        { x: -300, y: 200, delay: 500, speed: 8 * 0.75, isVisible: false, timeRemaining: resetDelay / 1000, name: 'Pollo', class: 'periquito', scale: 100, delay: 1, gifSrc: getRandomGif() },
+        { x: -400, y: 150, delay: 1000, speed: 4 * 0.75, isVisible: false, timeRemaining: resetDelay / 1000, name: 'Blue', class: 'periquito', scale: 100, delay: 1, gifSrc: getRandomGif() },
+        { x: -500, y: 250, delay: 1500, speed: 6 * 0.75, isVisible: false, timeRemaining: resetDelay / 1000, name: 'Pipa', class: 'periquito', scale: 100, delay: 1, gifSrc: getRandomGif() },
+        { x: -500, y: getRandomHeight(), delay: getRandomDelay(), speed: getRandomSpeed(), isVisible: false, timeRemaining: resetDelay / 1000, name: '', class: 'periquito', scale: getRandomScale(), gifSrc: getRandomGif() },
+        { x: -500, y: getRandomHeight(), delay: getRandomDelay(), speed: getRandomSpeed(), isVisible: false, timeRemaining: resetDelay / 1000, name: '', class: 'periquito', scale: getRandomScale(), gifSrc: getRandomGif() },
+        { x: -500, y: getRandomHeight(), delay: getRandomDelay(), speed: getRandomSpeed(), isVisible: false, timeRemaining: resetDelay / 1000, name: '', class: 'periquito', scale: getRandomScale(), gifSrc: getRandomGif() },
+        { x: -500, y: getRandomHeight(), delay: getRandomDelay(), speed: getRandomSpeed(), isVisible: false, timeRemaining: resetDelay / 1000, name: '', class: 'periquito', scale: getRandomScale(), gifSrc: getRandomGif() },
+        { x: -500, y: getRandomHeight(), delay: getRandomDelay(), speed: getRandomSpeed(), isVisible: false, timeRemaining: resetDelay / 1000, name: '', class: 'periquito', scale: getRandomScale(), gifSrc: getRandomGif() },
+        { x: -500, y: getRandomHeight(), delay: getRandomDelay(), speed: getRandomSpeed(), isVisible: false, timeRemaining: resetDelay / 1000, name: '', class: 'periquito', scale: getRandomScale(), gifSrc: getRandomGif() },
+        { x: -500, y: getRandomHeight(), delay: getRandomDelay(), speed: getRandomSpeed(), isVisible: false, timeRemaining: resetDelay / 1000, name: '', class: 'periquito', scale: getRandomScale(), gifSrc: getRandomGif() },
+        { x: -500, y: getRandomHeight(), delay: getRandomDelay(), speed: getRandomSpeed(), isVisible: false, timeRemaining: resetDelay / 1000, name: '', class: 'periquito', scale: getRandomScale(), gifSrc: getRandomGif() },
+        { x: -500, y: getRandomHeight(), delay: getRandomDelay(), speed: getRandomSpeed(), isVisible: false, timeRemaining: resetDelay / 1000, name: '', class: 'periquito', scale: getRandomScale(), gifSrc: getRandomGif() },
+        { x: -500, y: getRandomHeight(), delay: getRandomDelay(), speed: getRandomSpeed(), isVisible: false, timeRemaining: resetDelay / 1000, name: '', class: 'periquito', scale: getRandomScale(), gifSrc: getRandomGif() },
+        { x: -500, y: getRandomHeight(), delay: getRandomDelay(), speed: getRandomSpeed(), isVisible: false, timeRemaining: resetDelay / 1000, name: '', class: 'periquito', scale: getRandomScale(), gifSrc: getRandomGif() },
+        { x: -500, y: getRandomHeight(), delay: getRandomDelay(), speed: getRandomSpeed(), isVisible: false, timeRemaining: resetDelay / 1000, name: '', class: 'periquito', scale: getRandomScale(), gifSrc: getRandomGif() },
+        { x: -500, y: getRandomHeight(), delay: getRandomDelay(), speed: getRandomSpeed(), isVisible: false, timeRemaining: resetDelay / 1000, name: '', class: 'periquito', scale: getRandomScale(), gifSrc: getRandomGif() },
+        { x: -500, y: getRandomHeight(), delay: getRandomDelay(), speed: getRandomSpeed(), isVisible: false, timeRemaining: resetDelay / 1000, name: '', class: 'periquito', scale: getRandomScale(), gifSrc: getRandomGif() },
+        { x: -500, y: getRandomHeight(), delay: getRandomDelay(), speed: getRandomSpeed(), isVisible: false, timeRemaining: resetDelay / 1000, name: '', class: 'periquito', scale: getRandomScale(), gifSrc: getRandomGif() },
+        { x: -500, y: getRandomHeight(), delay: getRandomDelay(), speed: getRandomSpeed(), isVisible: false, timeRemaining: resetDelay / 1000, name: '', class: 'periquito', scale: getRandomScale(), gifSrc: getRandomGif() },
+
       ]
     }
-  });
+  })
 
+
+  useEffect(() => {
+    // Set overflow hidden on body when component mounts
+    document.body.style.overflow = 'hidden';
+
+    console.warn('periquitos', birdGroups)
+
+    return () => {
+      // Restore overflow when component unmounts
+      document.body.style.overflow = 'auto'; // or 'visible' depending on your layout
+    };
+  }, []);
   const [tooltip, setTooltip] = useState({ visible: false, name: '', x: 0, y: 0 });
 
   useEffect(() => {
@@ -45,6 +123,7 @@ function Home() {
       window.addEventListener('resize', () => {
         // console.log('Window resized', window.innerWidth);
         initialWidth.current = window.innerWidth;
+        // initialHeight.current = window.innerHeight;
       });
 
       // Start interval to move birds according to their speed
@@ -64,7 +143,7 @@ function Home() {
               }
 
               // Move bird to the right using its unique speed
-              return { ...b, x: b.x + b.speed };
+              return { ...b, x: (b.x + b.speed) };
             }
             return b;
           });
@@ -74,7 +153,7 @@ function Home() {
             periquitos: { birds: updatedBirds }
           };
         });
-      }, 50); // Adjust movement interval (50ms means birds move every 50ms)
+      }, 30); // Adjust movement interval (50ms means birds move every 50ms)
     });
 
     const countdownIntervals = birdGroups.periquitos.birds.map((bird, index) => {
@@ -85,6 +164,9 @@ function Home() {
               return { ...b, timeRemaining: b.timeRemaining - 1 }; // Decrease time remaining by 1 second
             }
             if (i === index && b.timeRemaining <= 0 && !b.isVisible) {
+              //Calculate new random vertical position for that bird
+
+              // b.y = Math.random() * ((initialHeight.current/1.5) - 100) + 100;
               return { ...b, isVisible: true }; // Show the bird again when the timer is up
             }
             return b;
@@ -124,14 +206,14 @@ function Home() {
         justifyContent: 'center',
         width: '100%',
         height: '100vh',
-        background: 'linear-gradient(45deg, #700255, #24019f)',
-        backgroundSize: '400% 400%',
-        animation: 'gradient 15s ease infinite',
-        '@keyframes gradient': {
-          '0%': { backgroundPosition: '0% 50%' },
-          '50%': { backgroundPosition: '100% 50%' },
-          '100%': { backgroundPosition: '0% 50%' },
-        },
+        background: 'linear-gradient(15deg, #124568 0%, #246f64 100%)',
+        // backgroundSize: '400% 400%',
+        // // animation: 'gradient 15s ease infinite',
+        // // '@keyframes gradient': {
+        // //   '0%': { backgroundPosition: '0% 50%' },
+        // //   '50%': { backgroundPosition: '100% 50%' },
+        // //   '100%': { backgroundPosition: '0% 50%' },
+        // // },
       }}
     >
       {/* Render each bird in the group */}
@@ -147,9 +229,9 @@ function Home() {
                   position: 'absolute',
                   top: `${bird.y}px`,  // Bird's vertical position
                   left: `${bird.x}px`, // Bird's horizontal position (changing over time)
-                  width: '100px', // Adjust the bird's size as needed
-                  height: '100px',
-                  backgroundImage: `url(${birdGif})`, // Use bird GIF as background image
+                  width: `${bird.scale}px`, // Adjust the bird's size as needed
+                  height: `${bird.scale}px`,
+                  backgroundImage: `url(${bird.gifSrc})`, // Use bird GIF as background image
                   backgroundSize: 'cover',
                   transform: 'scaleX(-1)', // Flip bird horizontally if needed
                   transition: 'left 0.05s linear',  // Smooth movement

@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './screens/Home';
+import HomeTrouble from './screens/HomeTrouble.js';
 import About from './screens/About';
 import Contact from './screens/Contact';
 // import BirdViewerAdmin from './screens/BirdViewerAdmin';
@@ -19,6 +20,7 @@ import BirdViewWithControlsScreen from './screens/BirdViewWithControlsScreen.js'
 import BirdViewControls from './screens/BirdViewWithControlsLegacy.js';
 // import BirdViewRecorder from './screens/BirdViewRecorder.js'
 import AdminLogin from './screens/AdminLogin.js';
+import ProjectArch from './screens/ProjectArch.js';
 
 
 
@@ -30,12 +32,16 @@ function AppRoutes() {
 
         {/* MAIN DOMAIN */}
         <Route path="/" element={<Home />} />
+        <Route path="/chaos" element={<HomeTrouble />} />
 
 
         {/* COMMON SITE */}
         <Route path="/admin" element={<AdminLogin />} />
-        <Route path="/about" element={<ActiveWorkers />} />
-        <Route path="/contact" element={<AdminLogin />} />
+        <Route path="/sudo" element={<ActiveWorkers />} />
+
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/for-devs" element={<ProjectArch />} />
 
         {/* ADMIN ONLY */}
         <Route path="/active-workers" element={<ActiveWorkers />} />

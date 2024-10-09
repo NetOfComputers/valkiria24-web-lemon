@@ -3,6 +3,7 @@ import { AppBar, Toolbar, Typography, Button } from '@mui/material';
 import { Link } from 'react-router-dom';
 
 function Header() {
+  const forDevs = ">/for developers";
   return (
     <AppBar position="static">
       <Toolbar>
@@ -17,6 +18,11 @@ function Header() {
         </Button>
         <Button color="inherit" component={Link} to="/contact">
           Contact
+        </Button>
+        <Button color="inherit" component={Link} to="/for-devs">
+          <Typography style={{ textTransform: 'none', color: 'whitesmoke'}} >
+          {forDevs}
+          </Typography>
         </Button>
       </Toolbar>
     </AppBar>

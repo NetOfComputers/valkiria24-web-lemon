@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Container, Typography, Card, CardContent, CardActionArea, Grid, Paper, Box, Button, TextField, IconButton, Collapse } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
 import io from 'socket.io-client';
-
+import StopCircleIcon from '@mui/icons-material/StopCircle';
+import BoltIcon from '@mui/icons-material/Bolt';
 // URL for the Socket.io server
 const SOCKET_SERVER_URL = 'wss://bluejims.com:5000';  // Ensure to include the protocol (http or https)
 
@@ -26,7 +27,7 @@ function ActiveWorkersAdmin() {
     // Define the event listener for catching active services
     const catchActiveServices = (services) => {
       setActiveServices(services);
-      console.log('The active services...', services);
+      console.warn('get_active_services', services);
     };
 
     // Listen for active services updates
@@ -40,9 +41,7 @@ function ActiveWorkersAdmin() {
 
 
     newSocket.on('worker_methods_return', (dto) => {
-      console.log('avaliable methods', dto['stdout'])
-
-      console.warn('Hardcoded Code !!')
+      console.warn('worker_standard_send\n\t<list_worker_methods>\n\t\tworker_methods_return', dto['stdout'])
 
       setAdditionalMethods(dto['stdout'])
     })
@@ -75,7 +74,7 @@ function ActiveWorkersAdmin() {
     navigate(`/active-workers/${workerId}/service/${serviceId}`);
   };
   const handleWorkerOperation = (type, methodName) => {
-    
+
     // Emit request for the selected method
     socket.emit('worker_standard_send', {
       'workerId': workerId,
@@ -114,13 +113,19 @@ function ActiveWorkersAdmin() {
 
       {/* Display services as a grid of cards */}
       <Grid container spacing={3}>
-        {activeServices.map(serviceId => (
-          <Grid item xs={12} sm={6} md={4} lg={3} key={serviceId}>
+        {activeServices.map(({ service_id, state }) => (
+          <Grid item xs={12} sm={6} md={4} lg={3} key={service_id}>
             <Card>
-              <CardActionArea onClick={() => handleServiceClick(serviceId)}>
+              <CardActionArea onClick={() => handleServiceClick(service_id)}>
                 <CardContent>
-                  <Typography variant="h5" component="div">
-                    {serviceId}
+                  <Typography variant="h5" component="div" style={{ display: 'flex', alignItems: 'center' }}>
+                    {service_id}
+                    {/* Conditionally render icon based on the state */}
+                    {state ? (
+                      <span style={{ width: 12, height: 12, borderRadius: '50%', backgroundColor: '#84dd84', marginLeft: 8 }} />
+                    ) : (
+                      <span style={{ width: 12, height: 12, borderRadius: '50%', backgroundColor: '#ef5252', marginLeft: 8 }} />
+                    )}
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
                     manage service
@@ -167,7 +172,7 @@ function ActiveWorkersAdmin() {
 
       <Collapse in={showAdditionalMethods}>
         <Grid container spacing={1} mt={1}>
-          {additionalMethods.map(({methodName, type}) => {
+          {additionalMethods.map(({ methodName, type }) => {
             // Define a pastel color palette
             const pastelColors = [
               '#FFB3BA', // Pastel pink
