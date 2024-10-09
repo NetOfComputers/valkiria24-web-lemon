@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import io from 'socket.io-client';
 
 // URL for the Socket.io server
-const SOCKET_SERVER_URL = 'wss://bluejims.com:5000';  // Ensure to include the protocol (http or https)
+const SOCKET_SERVER_URL = 'wss://bluejims.com:5000';
 
 function ActiveWorkers() {
   const navigate = useNavigate();

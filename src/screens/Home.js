@@ -2,24 +2,10 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Typography, Button, Box, Grid } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-import birdGif from '../media/bird2.gif'; // Import your bird GIF
+import CreateABird from '../components/BirdProject/modules/CreateABird';
+//Testing
+import { getAllBirds } from '../services/birdproject/birdControllerClientService';
 
-//Create a bird?
-
-
-
-
-
-
-
-
-
-
-
-/**
- * La idea es crear un componente para poder introducir una clave y con ella crear tu propio pájaro
- * @returns 
- */
 function Home() {
   const initialWidth = useRef(window.innerWidth);
   const initialHeight = useRef(window.innerHeight);
@@ -49,10 +35,27 @@ function Home() {
   const getRandomDelay = () => {
     return Math.random() * ((2000 - 0) + 0)
   }
-  const getRandomSpeed = () => {
-    return (Math.random() * (12 - 6) + 6) * 0.75;
+  const getRandomSpeed = (preset) => {
+    console.warn('Creating random speed', 'preset', preset)
+    let minSpeed;
+    let maxSpeed;
+    let multiplier;
+    if(preset=='slow'){
+      minSpeed=6
+      maxSpeed=8
+      multiplier=0.75 
+    }else if(preset=='fast'){
+      minSpeed=8
+      maxSpeed=10
+      multiplier=0.75 
+    }else if(preset=='normal'){
+      minSpeed=10
+      maxSpeed=14
+      multiplier=0.75 
+    }
+    return (Math.random() * (maxSpeed - minSpeed) + minSpeed) * multiplier;
   }
-  
+
   const getRandomScale = () => {
     return Math.floor(Math.random() * (80 - 40 + 1)) + 80
   }
@@ -66,42 +69,101 @@ function Home() {
       birds: [
         // { x: -200, y: 100, delay: 0, speed: 5*0.75, isVisible: false, timeRemaining: resetDelay / 1000, name: 'Jim', class: 'periquito_special', scale: 100},
         // { x: -200, y: 100, delay: 0, speed: 5*0.75, isVisible: false, timeRemaining: resetDelay / 1000, name: 'Jim', class: 'periquito_special', scale: 100 },
-        { x: -300, y: 200, delay: 500, speed: 8 * 0.75, isVisible: false, timeRemaining: resetDelay / 1000, name: 'Pollo', class: 'periquito', scale: 100, delay: 1, gifSrc: getRandomGif() },
-        { x: -400, y: 150, delay: 1000, speed: 4 * 0.75, isVisible: false, timeRemaining: resetDelay / 1000, name: 'Blue', class: 'periquito', scale: 100, delay: 1, gifSrc: getRandomGif() },
-        { x: -500, y: 250, delay: 1500, speed: 6 * 0.75, isVisible: false, timeRemaining: resetDelay / 1000, name: 'Pipa', class: 'periquito', scale: 100, delay: 1, gifSrc: getRandomGif() },
-        { x: -500, y: getRandomHeight(), delay: getRandomDelay(), speed: getRandomSpeed(), isVisible: false, timeRemaining: resetDelay / 1000, name: '', class: 'periquito', scale: getRandomScale(), gifSrc: getRandomGif() },
-        { x: -500, y: getRandomHeight(), delay: getRandomDelay(), speed: getRandomSpeed(), isVisible: false, timeRemaining: resetDelay / 1000, name: '', class: 'periquito', scale: getRandomScale(), gifSrc: getRandomGif() },
-        { x: -500, y: getRandomHeight(), delay: getRandomDelay(), speed: getRandomSpeed(), isVisible: false, timeRemaining: resetDelay / 1000, name: '', class: 'periquito', scale: getRandomScale(), gifSrc: getRandomGif() },
-        { x: -500, y: getRandomHeight(), delay: getRandomDelay(), speed: getRandomSpeed(), isVisible: false, timeRemaining: resetDelay / 1000, name: '', class: 'periquito', scale: getRandomScale(), gifSrc: getRandomGif() },
-        { x: -500, y: getRandomHeight(), delay: getRandomDelay(), speed: getRandomSpeed(), isVisible: false, timeRemaining: resetDelay / 1000, name: '', class: 'periquito', scale: getRandomScale(), gifSrc: getRandomGif() },
-        { x: -500, y: getRandomHeight(), delay: getRandomDelay(), speed: getRandomSpeed(), isVisible: false, timeRemaining: resetDelay / 1000, name: '', class: 'periquito', scale: getRandomScale(), gifSrc: getRandomGif() },
-        { x: -500, y: getRandomHeight(), delay: getRandomDelay(), speed: getRandomSpeed(), isVisible: false, timeRemaining: resetDelay / 1000, name: '', class: 'periquito', scale: getRandomScale(), gifSrc: getRandomGif() },
-        { x: -500, y: getRandomHeight(), delay: getRandomDelay(), speed: getRandomSpeed(), isVisible: false, timeRemaining: resetDelay / 1000, name: '', class: 'periquito', scale: getRandomScale(), gifSrc: getRandomGif() },
-        { x: -500, y: getRandomHeight(), delay: getRandomDelay(), speed: getRandomSpeed(), isVisible: false, timeRemaining: resetDelay / 1000, name: '', class: 'periquito', scale: getRandomScale(), gifSrc: getRandomGif() },
-        { x: -500, y: getRandomHeight(), delay: getRandomDelay(), speed: getRandomSpeed(), isVisible: false, timeRemaining: resetDelay / 1000, name: '', class: 'periquito', scale: getRandomScale(), gifSrc: getRandomGif() },
-        { x: -500, y: getRandomHeight(), delay: getRandomDelay(), speed: getRandomSpeed(), isVisible: false, timeRemaining: resetDelay / 1000, name: '', class: 'periquito', scale: getRandomScale(), gifSrc: getRandomGif() },
-        { x: -500, y: getRandomHeight(), delay: getRandomDelay(), speed: getRandomSpeed(), isVisible: false, timeRemaining: resetDelay / 1000, name: '', class: 'periquito', scale: getRandomScale(), gifSrc: getRandomGif() },
-        { x: -500, y: getRandomHeight(), delay: getRandomDelay(), speed: getRandomSpeed(), isVisible: false, timeRemaining: resetDelay / 1000, name: '', class: 'periquito', scale: getRandomScale(), gifSrc: getRandomGif() },
-        { x: -500, y: getRandomHeight(), delay: getRandomDelay(), speed: getRandomSpeed(), isVisible: false, timeRemaining: resetDelay / 1000, name: '', class: 'periquito', scale: getRandomScale(), gifSrc: getRandomGif() },
-        { x: -500, y: getRandomHeight(), delay: getRandomDelay(), speed: getRandomSpeed(), isVisible: false, timeRemaining: resetDelay / 1000, name: '', class: 'periquito', scale: getRandomScale(), gifSrc: getRandomGif() },
-        { x: -500, y: getRandomHeight(), delay: getRandomDelay(), speed: getRandomSpeed(), isVisible: false, timeRemaining: resetDelay / 1000, name: '', class: 'periquito', scale: getRandomScale(), gifSrc: getRandomGif() },
+        // { x: -300, y: 200, delay: 500, speed: 8 * 0.75, isVisible: false, timeRemaining: resetDelay / 1000, name: 'Pollo', class: 'periquito', scale: 100, delay: 1, gifSrc: getRandomGif() },
+        // { x: -400, y: 150, delay: 1000, speed: 4 * 0.75, isVisible: false, timeRemaining: resetDelay / 1000, name: 'Blue', class: 'periquito', scale: 100, delay: 1, gifSrc: getRandomGif() },
+        // { x: -500, y: 250, delay: 1500, speed: 6 * 0.75, isVisible: false, timeRemaining: resetDelay / 1000, name: 'Pipa', class: 'periquito', scale: 100, delay: 1, gifSrc: getRandomGif() },
+        // { x: -500, y: getRandomHeight(), delay: getRandomDelay(), speed: getRandomSpeed(), isVisible: false, timeRemaining: resetDelay / 1000, name: '', class: 'periquito', scale: getRandomScale(), gifSrc: getRandomGif() },
+        // { x: -500, y: getRandomHeight(), delay: getRandomDelay(), speed: getRandomSpeed(), isVisible: false, timeRemaining: resetDelay / 1000, name: '', class: 'periquito', scale: getRandomScale(), gifSrc: getRandomGif() },
+        // { x: -500, y: getRandomHeight(), delay: getRandomDelay(), speed: getRandomSpeed(), isVisible: false, timeRemaining: resetDelay / 1000, name: '', class: 'periquito', scale: getRandomScale(), gifSrc: getRandomGif() },
+        // { x: -500, y: getRandomHeight(), delay: getRandomDelay(), speed: getRandomSpeed(), isVisible: false, timeRemaining: resetDelay / 1000, name: '', class: 'periquito', scale: getRandomScale(), gifSrc: getRandomGif() },
+        // { x: -500, y: getRandomHeight(), delay: getRandomDelay(), speed: getRandomSpeed(), isVisible: false, timeRemaining: resetDelay / 1000, name: '', class: 'periquito', scale: getRandomScale(), gifSrc: getRandomGif() },
+        // { x: -500, y: getRandomHeight(), delay: getRandomDelay(), speed: getRandomSpeed(), isVisible: false, timeRemaining: resetDelay / 1000, name: '', class: 'periquito', scale: getRandomScale(), gifSrc: getRandomGif() },
+        // { x: -500, y: getRandomHeight(), delay: getRandomDelay(), speed: getRandomSpeed(), isVisible: false, timeRemaining: resetDelay / 1000, name: '', class: 'periquito', scale: getRandomScale(), gifSrc: getRandomGif() },
+        // { x: -500, y: getRandomHeight(), delay: getRandomDelay(), speed: getRandomSpeed(), isVisible: false, timeRemaining: resetDelay / 1000, name: '', class: 'periquito', scale: getRandomScale(), gifSrc: getRandomGif() },
+        // { x: -500, y: getRandomHeight(), delay: getRandomDelay(), speed: getRandomSpeed(), isVisible: false, timeRemaining: resetDelay / 1000, name: '', class: 'periquito', scale: getRandomScale(), gifSrc: getRandomGif() },
+        // { x: -500, y: getRandomHeight(), delay: getRandomDelay(), speed: getRandomSpeed(), isVisible: false, timeRemaining: resetDelay / 1000, name: '', class: 'periquito', scale: getRandomScale(), gifSrc: getRandomGif() },
+        // { x: -500, y: getRandomHeight(), delay: getRandomDelay(), speed: getRandomSpeed(), isVisible: false, timeRemaining: resetDelay / 1000, name: '', class: 'periquito', scale: getRandomScale(), gifSrc: getRandomGif() },
+        // { x: -500, y: getRandomHeight(), delay: getRandomDelay(), speed: getRandomSpeed(), isVisible: false, timeRemaining: resetDelay / 1000, name: '', class: 'periquito', scale: getRandomScale(), gifSrc: getRandomGif() },
+        // { x: -500, y: getRandomHeight(), delay: getRandomDelay(), speed: getRandomSpeed(), isVisible: false, timeRemaining: resetDelay / 1000, name: '', class: 'periquito', scale: getRandomScale(), gifSrc: getRandomGif() },
+        // { x: -500, y: getRandomHeight(), delay: getRandomDelay(), speed: getRandomSpeed(), isVisible: false, timeRemaining: resetDelay / 1000, name: '', class: 'periquito', scale: getRandomScale(), gifSrc: getRandomGif() },
+        // { x: -500, y: getRandomHeight(), delay: getRandomDelay(), speed: getRandomSpeed(), isVisible: false, timeRemaining: resetDelay / 1000, name: '', class: 'periquito', scale: getRandomScale(), gifSrc: getRandomGif() },
+        // { x: -500, y: getRandomHeight(), delay: getRandomDelay(), speed: getRandomSpeed(), isVisible: false, timeRemaining: resetDelay / 1000, name: '', class: 'periquito', scale: getRandomScale(), gifSrc: getRandomGif() },
 
       ]
     }
   })
 
-
+  const [dataLoaded, setDataLoaded] = useState(false);
   useEffect(() => {
-    // Set overflow hidden on body when component mounts
-    document.body.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden'
+    // const connection = connect()
+    // // Connect to the socket
+    // setDbSocket(connection)
+  
+    // connection.on('find_birds_error', (event) => {
+    //   console.error('Cannot find all birds from database', event)
+    // })
+  
+    // connection.on('founded_birds', (event) => {
+    //   console.warn('Birds from database', event);
+    
+    getAllBirds()
+      .then(result => {
+        // Check if the API call was successful
+        if (result.success) {
+          console.log("All birds:", result.data);
+          console.log("Result from getAllBirds:", result);
 
-    console.warn('periquitos', birdGroups)
-
+          // Accessing the data property directly
+          const birds = result.data.data; 
+  
+          // Ensure that birds is an array
+          if (Array.isArray(birds)) {
+            const updatedBirds = birds.map((bird) => {
+              return {
+                x: -200,
+                y: getRandomHeight(),
+                delay: getRandomDelay(),
+                speed: getRandomSpeed(bird.speed),
+                isVisible: false,
+                timeRemaining: resetDelay / 1000,
+                name: bird.name,
+                class: 'periquito',
+                scale: 100,
+                gifSrc: `./multibirdse/color_speed_gif/${bird.color}-${bird.speed}.gif`,
+              };
+            }).filter(Boolean); // Filter out null values
+  
+            // Update birdGroups with the new array of birds
+            setBirdGroups((prevBirdGroups) => ({
+              ...prevBirdGroups,
+              periquitos: {
+                ...prevBirdGroups.periquitos,
+                birds: updatedBirds, // Replace the existing birds with the updated array
+              },
+            }));
+  
+            // Set dataLoaded to true after successfully loading birds
+            setDataLoaded(true);
+            console.warn('Birds added');
+          } else {
+            console.error("Expected an array, but got:", birds);
+          }
+        } else {
+          console.error("Error fetching birds:", result.error);
+        }
+      })
+      .catch(error => {
+        console.error("An unexpected error occurred:", error);
+      });
+  
     return () => {
       // Restore overflow when component unmounts
-      document.body.style.overflow = 'auto'; // or 'visible' depending on your layout
+      // document.body.style.overflow = 'auto'; // or 'visible' depending on your layout
     };
   }, []);
+  
+
   const [tooltip, setTooltip] = useState({ visible: false, name: '', x: 0, y: 0 });
 
   useEffect(() => {
@@ -181,7 +243,7 @@ function Home() {
       intervals.forEach(clearInterval); // Clean up intervals on unmount
       countdownIntervals.forEach(clearInterval); // Clean up countdown intervals
     };
-  }, []);
+  }, [dataLoaded]);
 
   const handleMouseEnter = (bird) => {
     // Immediately set the tooltip position based on the bird's current position when hovered
@@ -286,8 +348,7 @@ function Home() {
           backgroundColor: 'rgba(0, 0, 0, 0.8)',
           color: 'white',
           padding: '5px',
-          borderRadius: '5px',
-          zIndex: 10,
+          borderRadius: '5px'
         }}
       >
         {tooltip.name}
@@ -375,8 +436,18 @@ function Home() {
         }}
       >
         {labelsVisible ? <Visibility /> : <VisibilityOff />}
-      </Button>
 
+      </Button>
+      <CreateABird
+        sx={{
+          borderRadius: '50px',
+          position: 'absolute',
+          top: '70px',
+          right: '86px',
+          zIndex: 10,
+          backgroundColor: 'transparent',
+        }}
+      />
     </Box>
   );
 }
