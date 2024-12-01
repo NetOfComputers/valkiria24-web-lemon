@@ -18,7 +18,7 @@ function ActiveWorkers() {
     setSocket(newSocket);
 
     // Register this client as a controller
-    newSocket.emit('reg_as_controller', localStorage.getItem('hash'));
+    newSocket.emit('mg25_reg_as_controller', localStorage.getItem('hash'));
 
     // Define the event listener for catching active workers
     const catchActiveWorkers = (workers) => {
@@ -30,7 +30,9 @@ function ActiveWorkers() {
     newSocket.on('catch_active_workers', catchActiveWorkers);
 
     // Request the list of active workers
-    newSocket.emit('get_active_workers');
+    newSocket.emit('get_active_workers', {
+      callsback: 'catch_active_workers',
+    });
 
     newSocket.on('ret_service_call_stdout', (stdout)=>{
       console.log('Execution Results', stdout)

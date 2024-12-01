@@ -26,12 +26,12 @@ function ActiveServiceAdmin() {
         setSocket(newSocket);
 
         // Register this client as a controller
-        newSocket.emit('reg_as_controller', localStorage.getItem('hash'));
+        newSocket.emit('mg25_reg_as_controller', localStorage.getItem('hash'));
 
         // Listen for active services updates
-        newSocket.on('outhist_service_return', (dto) => {
+        newSocket.on('get_service_methods', (dto) => {
             console.log('Received Active Methods', dto);
-            setActiveMethods(dto.stdout);
+            setActiveMethods(dto.stdout.get_service_methods);
         });
 
         // Listen for additional methods updates
@@ -41,18 +41,19 @@ function ActiveServiceAdmin() {
         });
 
         // Request the list of active services
-        const activeMethodsPayload = {
-            'workerId': workerId,
-            'serviceId': serviceId,
-            'catchEventOn': 'outhist_service_return',
-            'type': 'standard',
-            'call': 'list_exposed',
-            'args': null,
-            'feedback': null,
-            'shell': true
-        };
-        newSocket.emit('service_standard_send', activeMethodsPayload);
-
+        newSocket.emit('main_service_send', {
+            "workerId": workerId,
+            "workerName": "ukn",
+            "service_method": "get_service_methods",
+            "callsback": "get_service_methods",
+            "data": {
+                'service_name': "vOut",
+                'stdout': {},
+                'stderr': {}
+            },
+            "metadata": { "fake": "metadata" },
+        });
+        /*
         // Request additional methods
         const additionalMethodsPayload = {
             'workerId': workerId,
@@ -64,7 +65,7 @@ function ActiveServiceAdmin() {
             'feedback': null,
             'shell': true
         };
-        newSocket.emit('service_standard_send', additionalMethodsPayload);
+        newSocket.emit('service_standard_send', additionalMethodsPayload);*/
 
         // Clean up the socket connection when the component unmounts
         return () => {
@@ -101,7 +102,7 @@ function ActiveServiceAdmin() {
         }
     };
 
-    const handleServiceAdditionalMethodCall = (methodName) => {
+    /*const handleServiceAdditionalMethodCall = (methodName) => {
         // Emit request for the selected method
         socket.emit('service_standard_send', {
             'workerId': workerId,
@@ -127,28 +128,38 @@ function ActiveServiceAdmin() {
             // Do not accumulate outputs
             setOutputs(newOutput);
         });
-    };
+    };*/
     const handleServiceMethodCall = (methodName) => {
         // Emit request for the selected method
-        socket.emit('service_standard_send', {
-            'workerId': workerId,
-            'serviceId': serviceId,
-            'catchEventOn': 'main_service_return',
-            'type': 'standard',
-            'call': methodName,
-            'args': null,
-            'feedback': null,
-            'shell': true
+        socket.emit('main_service_send', {
+            "workerId": workerId,
+            "workerName": "ukn",
+            "service_method": methodName,
+            "callsback": "handledMethodCall",
+            "data": {
+                'service_name': serviceId,
+                'stdout': {},
+                'stderr': {},
+                'requires_pumps': [
+                    'udpVideoPump',
+                    'wssControlPump'
+                ],
+            },
+            "metadata": { "fake": "metadata" },
         });
 
         // Listen for the output and update state
-        socket.once('main_service_return', (dto) => {
+        socket.once('handledMethodCall', (dto) => {
             console.log('Received', dto);
-
+            
+            if(JSON.stringify(dto.stderr) == '{}'){
+                dto.stderr = null;
+            }
+            
             // Prepare output message based on stdout and stderr
             const newOutput = {
                 type: dto.stderr ? 'error' : 'success',
-                message: dto.stderr || dto.stdout
+                message: dto.stderr || JSON.stringify(dto.stdout, null, 4)
             };
 
             // Do not accumulate outputs
@@ -167,7 +178,7 @@ function ActiveServiceAdmin() {
 
             {/* Display active methods as a grid of cards */}
             <Grid container spacing={3}>
-                {activeMethods.map(methodName => (
+                {activeMethods.map(({ methodName }) => (
                     <Grid item xs={12} sm={6} md={4} lg={3} key={methodName}>
                         <Card>
                             <CardActionArea onClick={() => handleServiceMethodCall(methodName)}>
@@ -197,7 +208,7 @@ function ActiveServiceAdmin() {
 
             {/* Display additional methods if toggled */}
 
-            <Collapse in={showAdditionalMethods}>
+            {/* <Collapse in={showAdditionalMethods}>
                 <Grid container spacing={1} mt={1}>
                     {additionalMethods.map((methodName, index) => {
                         // Define a pastel color palette
@@ -247,7 +258,7 @@ function ActiveServiceAdmin() {
                         );
                     })}
                 </Grid>
-            </Collapse>
+            </Collapse> */}
 
             {/* Buttons to start and stop polling */}
             <Box mt={4}>

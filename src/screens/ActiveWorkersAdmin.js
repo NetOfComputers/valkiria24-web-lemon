@@ -22,31 +22,39 @@ function ActiveWorkersAdmin() {
     setSocket(newSocket);
 
     // Register this client as a controller
-    newSocket.emit('reg_as_controller', localStorage.getItem('hash'));
+    newSocket.emit('mg25_reg_as_controller', localStorage.getItem('hash'));
 
     // Define the event listener for catching active services
     const catchActiveServices = (services) => {
-      setActiveServices(services);
+      console.log('received active services', services);
+      setActiveServices(services.stdout.get_services);
       console.warn('get_active_services', services);
     };
 
     // Listen for active services updates
-    newSocket.on('listed_services', catchActiveServices);
+    newSocket.on('get_worker_services', catchActiveServices);
 
     // Request the list of active services
-    newSocket.emit('get_active_services', workerId);
+    newSocket.emit('main_service_send', {
+      "workerId": workerId,
+      "workerName": "ukn",
+      "service_method": "get_worker_services",
+      "callsback": "get_worker_services",
+      "data": {},
+      "metadata": { "fake": "metadata" },
+    });
 
 
 
 
-
+    /*
     newSocket.on('worker_methods_return', (dto) => {
       console.warn('worker_standard_send\n\t<list_worker_methods>\n\t\tworker_methods_return', dto['stdout'])
 
       setAdditionalMethods(dto['stdout'])
-    })
+    })*/
 
-    const workerMethods = {
+    /*const workerMethods = {
       'workerId': workerId,
       'serviceId': null,
       'catchEventOn': 'worker_methods_return',
@@ -55,9 +63,20 @@ function ActiveWorkersAdmin() {
       'args': null,
       'feedback': null,
       'shell': true
-    };
-    newSocket.emit('worker_standard_send', workerMethods);
-
+    };*/
+    const get_worker_methods = {
+      "workerId": workerId,
+      "workerName": "ukn",
+      "service_method": "get_worker_methods",
+      "callsback": "get_worker_methods",
+      "data": {},
+      "metadata": { "fake": "metadata" },
+    }
+    newSocket.emit('main_service_send', get_worker_methods);
+    newSocket.on('get_worker_methods', (dto) => {
+      console.warn('worker_standard_send\n\t<list_worker_methods>\n\t\tworker_methods_return', dto['stdout'])
+      setAdditionalMethods(dto['stdout']['get_worker_methods'])
+    })
 
 
 
@@ -113,15 +132,15 @@ function ActiveWorkersAdmin() {
 
       {/* Display services as a grid of cards */}
       <Grid container spacing={3}>
-        {activeServices.map(({ service_id, state }) => (
-          <Grid item xs={12} sm={6} md={4} lg={3} key={service_id}>
+        {activeServices.map(({ id, running }) => (
+          <Grid item xs={12} sm={6} md={4} lg={3} key={id}>
             <Card>
-              <CardActionArea onClick={() => handleServiceClick(service_id)}>
+              <CardActionArea onClick={() => handleServiceClick(id)}>
                 <CardContent>
                   <Typography variant="h5" component="div" style={{ display: 'flex', alignItems: 'center' }}>
-                    {service_id}
+                    {id}
                     {/* Conditionally render icon based on the state */}
-                    {state ? (
+                    {running ? (
                       <span style={{ width: 12, height: 12, borderRadius: '50%', backgroundColor: '#84dd84', marginLeft: 8 }} />
                     ) : (
                       <span style={{ width: 12, height: 12, borderRadius: '50%', backgroundColor: '#ef5252', marginLeft: 8 }} />
@@ -155,6 +174,8 @@ function ActiveWorkersAdmin() {
           )}
         </Paper>
       </Box>
+
+
       {/* Toggle Additional Methods */}
       <Box mt={4}>
         <Button
