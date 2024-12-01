@@ -10,7 +10,7 @@ function Home() {
   const initialWidth = useRef(window.innerWidth);
   const initialHeight = useRef(window.innerHeight);
   const navigate = useNavigate();
-  const resetDelay = 2000; // 10 seconds delay before bird starts again
+  const resetDelay = 20000; // 10 seconds delay before bird starts again
   const [labelsVisible, setLabelsVisible] = useState(true);
 
   const b1 = './bird_position/1b.gif';
@@ -28,7 +28,7 @@ function Home() {
   const maxRandomSpeed = 0;
   const maxRandomHeight = 0;
   const minRandomHeight = 0;
-
+  const viewNotVisibleCompensation = 29.450755774216248;
   const getRandomHeight = () => {
     return Math.random() * ((initialHeight.current / 1.5) - 100) + 100
   }
@@ -40,18 +40,18 @@ function Home() {
     let minSpeed;
     let maxSpeed;
     let multiplier;
-    if(preset=='slow'){
-      minSpeed=6
-      maxSpeed=8
-      multiplier=0.75 
-    }else if(preset=='fast'){
-      minSpeed=8
-      maxSpeed=10
-      multiplier=0.75 
-    }else if(preset=='normal'){
-      minSpeed=10
-      maxSpeed=14
-      multiplier=0.75 
+    if (preset == 'slow') {
+      minSpeed = 6
+      maxSpeed = 8
+      multiplier = 0.75
+    } else if (preset == 'fast') {
+      minSpeed = 8
+      maxSpeed = 10
+      multiplier = 0.75
+    } else if (preset == 'normal') {
+      minSpeed = 10
+      maxSpeed = 14
+      multiplier = 0.75
     }
     return (Math.random() * (maxSpeed - minSpeed) + minSpeed) * multiplier;
   }
@@ -99,14 +99,14 @@ function Home() {
     // const connection = connect()
     // // Connect to the socket
     // setDbSocket(connection)
-  
+
     // connection.on('find_birds_error', (event) => {
     //   console.error('Cannot find all birds from database', event)
     // })
-  
+
     // connection.on('founded_birds', (event) => {
     //   console.warn('Birds from database', event);
-    
+
     getAllBirds()
       .then(result => {
         // Check if the API call was successful
@@ -115,8 +115,8 @@ function Home() {
           console.log("Result from getAllBirds:", result);
 
           // Accessing the data property directly
-          const birds = result.data.data; 
-  
+          const birds = result.data.data;
+
           // Ensure that birds is an array
           if (Array.isArray(birds)) {
             const updatedBirds = birds.map((bird) => {
@@ -133,7 +133,7 @@ function Home() {
                 gifSrc: `./multibirdse/color_speed_gif/${bird.color}-${bird.speed}.gif`,
               };
             }).filter(Boolean); // Filter out null values
-  
+
             // Update birdGroups with the new array of birds
             setBirdGroups((prevBirdGroups) => ({
               ...prevBirdGroups,
@@ -142,7 +142,7 @@ function Home() {
                 birds: updatedBirds, // Replace the existing birds with the updated array
               },
             }));
-  
+
             // Set dataLoaded to true after successfully loading birds
             setDataLoaded(true);
             console.warn('Birds added');
@@ -156,13 +156,13 @@ function Home() {
       .catch(error => {
         console.error("An unexpected error occurred:", error);
       });
-  
+
     return () => {
       // Restore overflow when component unmounts
-      // document.body.style.overflow = 'auto'; // or 'visible' depending on your layout
+      document.body.style.overflow = 'auto'; // or 'visible' depending on your layout
     };
   }, []);
-  
+
 
   const [tooltip, setTooltip] = useState({ visible: false, name: '', x: 0, y: 0 });
 
@@ -187,14 +187,16 @@ function Home() {
         initialWidth.current = window.innerWidth;
         // initialHeight.current = window.innerHeight;
       });
-
+      if (initialHeight.current != window.innerWidth){
+        console.error('Malformed Logic')
+      }
       // Start interval to move birds according to their speed
       return setInterval(() => {
         setBirdGroups((prevBirdGroups) => {
           const updatedBirds = prevBirdGroups.periquitos.birds.map((b, i) => {
             if (i === index) {
 
-              if (b.x >= initialWidth.current) {
+              if (b.x >= (initialWidth.current - b.scale)) {
                 // console.log('used window size', initialWidth);
                 // When the bird goes off-screen, reset its position and start the countdown
                 return { ...b, isVisible: false, x: -200, timeRemaining: resetDelay / 1000 };
@@ -269,15 +271,20 @@ function Home() {
         width: '100%',
         height: '100vh',
         background: 'linear-gradient(15deg, #124568 0%, #246f64 100%)',
-        // backgroundSize: '400% 400%',
-        // // animation: 'gradient 15s ease infinite',
-        // // '@keyframes gradient': {
-        // //   '0%': { backgroundPosition: '0% 50%' },
-        // //   '50%': { backgroundPosition: '100% 50%' },
-        // //   '100%': { backgroundPosition: '0% 50%' },
-        // // },
       }}
     >
+
+      <CreateABird
+        sx={{
+          borderRadius: '50px',
+          position: 'absolute',
+          top: '70px',
+          right: '86px',
+          zIndex: 10,
+          backgroundColor: 'transparent',
+        }}
+      />
+
       {/* Render each bird in the group */}
       {birdGroups.periquitos.birds.map((bird, index) => (
         <Box key={index}>
@@ -338,22 +345,7 @@ function Home() {
         </Box>
       ))}
 
-      {/* Tooltip for displaying bird names */}
-      {/* {tooltip.visible && ( */}
-      <Box
-        sx={{
-          position: 'absolute',
-          top: `${tooltip.y}px`,
-          left: `${tooltip.x}px`,
-          backgroundColor: 'rgba(0, 0, 0, 0.8)',
-          color: 'white',
-          padding: '5px',
-          borderRadius: '5px'
-        }}
-      >
-        {tooltip.name}
-      </Box>
-      {/* )} */}
+
 
       <Box textAlign="center" mb={4} sx={{ zIndex: 1 }}>
         <Typography
@@ -438,16 +430,7 @@ function Home() {
         {labelsVisible ? <Visibility /> : <VisibilityOff />}
 
       </Button>
-      <CreateABird
-        sx={{
-          borderRadius: '50px',
-          position: 'absolute',
-          top: '70px',
-          right: '86px',
-          zIndex: 10,
-          backgroundColor: 'transparent',
-        }}
-      />
+
     </Box>
   );
 }
