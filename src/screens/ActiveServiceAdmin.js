@@ -27,9 +27,9 @@ function ActiveServiceAdmin() {
 
         // Register this client as a controller
         newSocket.emit('mg25_reg_as_controller', {
-      token: localStorage.getItem('hash'),
-      workerName: 'valkiria24-web-lemon',
-    });
+            token: localStorage.getItem('hash'),
+            workerName: 'valkiria24-web-lemon',
+        });
 
         // Listen for active services updates
         newSocket.on('get_service_methods', (dto) => {
@@ -154,15 +154,26 @@ function ActiveServiceAdmin() {
         // Listen for the output and update state
         socket.once('handledMethodCall', (dto) => {
             console.log('Received', dto);
-            
-            if(JSON.stringify(dto.stderr) == '{}'){
+
+            if (JSON.stringify(dto.stderr) == '{}') {
                 dto.stderr = null;
             }
-            
+
+            let messageToDisplay = dto.stderr;
+            const firstResponse = dto.stdout[Object.keys(dto.stdout)[0]];
+            if (!dto.stderr && firstResponse) {
+
+                // if (firstResponse.responseObject == 'json') {
+                messageToDisplay = JSON.stringify(firstResponse, null, 4);
+                // }
+
+            }
+
+            // dto.stderr || JSON.stringify(dto.stdout, null, 4)
             // Prepare output message based on stdout and stderr
             const newOutput = {
                 type: dto.stderr ? 'error' : 'success',
-                message: dto.stderr || JSON.stringify(dto.stdout, null, 4)
+                message: messageToDisplay
             };
 
             // Do not accumulate outputs
@@ -294,7 +305,13 @@ function ActiveServiceAdmin() {
                         <Typography
                             variant="body2"
                             component="pre"
-                            style={{ color: outputs.type === 'error' ? 'red' : 'lightgreen' }}
+                            style={{
+                                color: outputs.type === 'error' ? 'red' : 'lightgreen',
+                                wordWrap: 'break-word', // Ensures long words break to the next line
+                                whiteSpace: 'pre-wrap', // Ensures preformatted text wraps correctly
+                                overflowWrap: 'break-word', // Alternative for word wrapping
+                                maxWidth: '100%', // Prevent horizontal overflow
+                            }}
                         >
                             {outputs.message}
                         </Typography>
