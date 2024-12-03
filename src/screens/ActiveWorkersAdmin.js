@@ -40,7 +40,7 @@ function ActiveWorkersAdmin() {
     // Request the list of active services
     newSocket.emit('main_service_send', {
       "workerId": workerId,
-      "workerName": "ukn",
+      "workerName": workerId,
       "service_method": "get_worker_services",
       "callsback": "get_worker_services",
       "data": {},
@@ -69,7 +69,7 @@ function ActiveWorkersAdmin() {
     };*/
     const get_worker_methods = {
       "workerId": workerId,
-      "workerName": "ukn",
+      "workerName": workerId,
       "service_method": "get_worker_methods",
       "callsback": "get_worker_methods",
       "data": {},

@@ -10,7 +10,7 @@ function ActiveWorkers() {
   const navigate = useNavigate();
   const [socket, setSocket] = useState(null);
   const [message, setMessage] = useState('');
-  const [activeWorkers, setActiveWorkers] = useState({});
+  const [activeWorkers, setActiveWorkers] = useState([]);
 
   useEffect(() => {
     // Create a connection to the socket.io server
@@ -80,7 +80,7 @@ function ActiveWorkers() {
 
       {/* List of active workers */}
       <List>
-        {Object.keys(activeWorkers).map((workerId) => (
+        {activeWorkers.map((workerId) => (
           <ListItem 
             key={workerId} 
             button 

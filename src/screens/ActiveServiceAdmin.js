@@ -46,7 +46,7 @@ function ActiveServiceAdmin() {
         // Request the list of active services
         newSocket.emit('main_service_send', {
             "workerId": workerId,
-            "workerName": "ukn",
+            "workerName": workerId,
             "service_method": "get_service_methods",
             "callsback": "get_service_methods",
             "data": {
@@ -136,7 +136,7 @@ function ActiveServiceAdmin() {
         // Emit request for the selected method
         socket.emit('main_service_send', {
             "workerId": workerId,
-            "workerName": "ukn",
+            "workerName": workerId,
             "service_method": methodName,
             "callsback": "handledMethodCall",
             "data": {
