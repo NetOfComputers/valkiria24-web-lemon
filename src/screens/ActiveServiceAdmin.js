@@ -26,7 +26,10 @@ function ActiveServiceAdmin() {
         setSocket(newSocket);
 
         // Register this client as a controller
-        newSocket.emit('mg25_reg_as_controller', localStorage.getItem('hash'));
+        newSocket.emit('mg25_reg_as_controller', {
+      token: localStorage.getItem('hash'),
+      workerName: 'valkiria24-web-lemon',
+    });
 
         // Listen for active services updates
         newSocket.on('get_service_methods', (dto) => {

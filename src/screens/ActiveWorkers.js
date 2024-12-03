@@ -18,7 +18,10 @@ function ActiveWorkers() {
     setSocket(newSocket);
 
     // Register this client as a controller
-    newSocket.emit('mg25_reg_as_controller', localStorage.getItem('hash'));
+    newSocket.emit('mg25_reg_as_controller', {
+      token: localStorage.getItem('hash'),
+      workerName: 'valkiria24-web-lemon',
+    });
 
     // Define the event listener for catching active workers
     const catchActiveWorkers = (workers) => {
