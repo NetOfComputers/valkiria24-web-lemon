@@ -5,18 +5,27 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 
-const SettingsDialog = ({ open, onClose }) => {
+const SettingsDialog = ({ open, onClose, sendControlMessage}) => {
   const handleBrightnessChange = (change) => {
     // Send brightness change WebSocket message
+    sendControlMessage(change);
   };
 
   const handleRescaleValueChange = (change) => {
     // Send rescale change WebSocket message
+    sendControlMessage(change);
   };
 
   const handleChangeFps = (change) => {
     // Send FPS change WebSocket message
+    sendControlMessage(change);
   };
+
+  //This is the model to follow for creating more mehods
+  const currentDevice = () => {
+    // send action to do and return point of the result
+    sendControlMessage('currentDevice', 'on_currentDevice')
+  }
 
   return (
     <Dialog open={open} onClose={onClose}>
@@ -39,6 +48,15 @@ const SettingsDialog = ({ open, onClose }) => {
           <Typography variant="h6" display="inline" sx={{ mx: 2 }}>Brightness: Unknown</Typography>
           <IconButton onClick={() => handleBrightnessChange(0.1)}><Brightness7Icon /></IconButton>
         </Box>
+
+        {/* GET TEST */}
+        <Box mb={2}>
+          <IconButton onClick={() => currentDevice()}><Brightness4Icon /></IconButton>
+          <Typography variant="h6" display="inline" sx={{ mx: 2 }}>Brightness: Unknown</Typography>
+          <IconButton onClick={() => currentDevice()}><Brightness7Icon /></IconButton>
+        </Box>
+
+
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose}>Close</Button>

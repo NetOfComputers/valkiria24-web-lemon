@@ -207,6 +207,9 @@ function BirdViewControls() {
   }, [imageRef]);
 
   
+  const pseudoSendMiddleware = (somethign) => {
+    console.log('Pseudo Sending', somethign)
+  }
 
   return (
     <Container maxWidth="md" sx={containerStyles}>
@@ -224,7 +227,7 @@ function BirdViewControls() {
       <VideoPlayer
         connectedVideo={connectedVideo}
         imageRef={imageRef}
-        sendControlMessage={sendControlMessage}
+        sendControlMessage={pseudoSendMiddleware}
         handleStartRecording={handleStartRecording}
         handleStopRecording={handleStopRecording}
         onSettingsOpen={handleSettingsOpen}
