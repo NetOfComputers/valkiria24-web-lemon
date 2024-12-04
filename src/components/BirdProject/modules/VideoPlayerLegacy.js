@@ -15,7 +15,7 @@ const VideoPlayer = ({ connectedVideo, imageRef, onSettingsOpen, sendControlMess
 
 
     const handleDeviceIndexChange = (change) => {
-        if (change>1){
+        if (change>0){
             sendControlMessage('prevDevice', 'on_prevDevice');
         }else{
             sendControlMessage('nextDevice', 'on_nextDevice');

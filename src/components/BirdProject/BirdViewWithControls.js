@@ -207,8 +207,9 @@ function BirdViewControls() {
   }, [imageRef]);
 
   
-  const pseudoSendMiddleware = (somethign) => {
-    console.log('Pseudo Sending', somethign)
+  const pseudoSendMiddleware = (a, b) => {
+    console.log('Pseudo Sending', a, b)
+    sendControlMessage(a, b);
   }
 
   return (
