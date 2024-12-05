@@ -133,6 +133,22 @@ function ActiveServiceAdmin() {
         });
     };*/
     const handleServiceMethodCall = (methodName) => {
+
+        let required_pumps = [];
+        //ÑAPA SOBRE ÑAPA
+        if (methodName == 'start_service' || methodName == 'stop_service') {
+            if( serviceId == 'vOut'){
+                required_pumps = [
+                    'udpVideoPump',
+                    'wssControlPump'
+                ]
+            }else if( serviceId == 'audioOut') {
+                required_pumps = [
+                    'udpAudioPump'
+                ]
+            }
+        }
+
         // Emit request for the selected method
         socket.emit('main_service_send', {
             "workerId": workerId,
@@ -143,10 +159,7 @@ function ActiveServiceAdmin() {
                 'service_name': serviceId,
                 'stdout': {},
                 'stderr': {},
-                'requires_pumps': [
-                    'udpVideoPump',
-                    'wssControlPump'
-                ],
+                'requires_pumps': required_pumps,
             },
             "metadata": { "fake": "metadata" },
         });

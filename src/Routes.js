@@ -18,6 +18,7 @@ import Footer from './components/Footer';
 // import BirdPhoto from './screens/BirdPhoto.js';
 import BirdViewWithControlsScreen from './screens/BirdViewWithControlsScreen.js';
 import BirdViewControls from './screens/BirdViewWithControlsLegacy.js';
+import PitViewWithControlsScreen from './screens/PitViewWithControlsScreen.js';
 // import BirdViewRecorder from './screens/BirdViewRecorder.js'
 import AdminLogin from './screens/AdminLogin.js';
 import ProjectArch from './screens/ProjectArch.js';
@@ -52,6 +53,7 @@ function AppRoutes() {
         {/* BIRD PROJECT */}
         {/* Redirect now to the very new fragmented code*/}
         <Route path="/bird-view" element={<BirdViewWithControlsScreen />} />
+        <Route path="/pit-view" element={<PitViewWithControlsScreen />} />
 
         <Route path="/bird-view-controls" element={<BirdViewWithControlsScreen />} />
         <Route path="/bird-view-controls-legacy" element={<BirdViewControls />} />

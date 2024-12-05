@@ -30,12 +30,12 @@ const VideoPlayer = ({ connectedVideo, imageRef, onSettingsOpen, sendControlMess
 
             {connectedVideo ? (
                 <img
-                    ref={imageRef}
-                    alt="Live stream"
-                    style={{
-                        ...videoStyles,
-                        transform: isRotated ? 'rotate(180deg)' : 'none', // Dynamic rotation
-                    }}
+                src='./pits.jpg'
+                alt="Live stream"
+                style={{
+                    ...videoStyles,
+                    transform: isRotated ? 'rotate(180deg)' : 'none', // Dynamic rotation
+                }}
                 />
             ) : (
                 <Box display="flex" alignItems="center" flexDirection="column">

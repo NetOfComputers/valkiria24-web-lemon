@@ -1,14 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Container, Box, Typography } from '@mui/material';
 import AudioStatus from './modules/AudioStatus';
-import VideoPlayer from './modules/VideoPlayerLegacy';
+import VideoPlayer from './modules/VideoPitPlayerLegacy';
 import SettingsDialog from './modules/SettingsDialog';
 import { useNavigate } from 'react-router-dom';
 
 // import { WS_VIDEO_SERVER_URL, WS_VIDEO_CONTROL_SERVER_URL, WS_AUDIO_SERVER_URL } from './constants';
-const WS_VIDEO_SERVER_URL = 'wss://bluejims.com:8765';
-const WS_VIDEO_CONTROL_SERVER_URL = 'wss://bluejims.com:8764';
-const WS_AUDIO_SERVER_URL = 'wss://bluejims.com:8766';
+const WS_VIDEO_SERVER_URL = 'wss://bluejims.com:8762';
+const WS_VIDEO_CONTROL_SERVER_URL = 'wss://bluejims.com:8642';
+const WS_AUDIO_SERVER_URL = 'wss://bluejims.com:7662';
 
 function BirdViewControls() {
   const [connectedVideo, setConnectedVideo] = useState(false);
@@ -240,13 +240,20 @@ function BirdViewControls() {
     };
   }, []);
 
+  //set video connected to true after 3 seconds
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setConnectedVideo(true);
+    }, 3000);
+    return () => clearTimeout(timeout);
+  }, []);
 
   return (
     <Container maxWidth="md" sx={containerStyles}>
       <Box mb={3}>
-        <Typography variant="h2" sx={titleStyles}>BIRD VIEWER</Typography>
+        <Typography variant="h2" sx={titleStyles}>PITs VIEWER</Typography>
         <Typography variant="body1" sx={subTitleStyles}>
-          Lots of birds to see! Enjoy the view and control the camera.
+          Lots of pits, like 2 or something! Enjoy the view and control the camera.
         </Typography>
         {JSON.stringify(stats) !== '{}' && (
           <>

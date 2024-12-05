@@ -219,8 +219,6 @@ function BirdViewControls() {
       }
     };
   }, []);
-
-
   return (
     <Container
       maxWidth="md"
