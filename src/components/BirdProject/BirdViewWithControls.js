@@ -55,6 +55,7 @@ function BirdViewControls() {
 
     wsVideoControlRef.current.onopen = () => {
       console.log('WebSocket for videoControl connected');
+      wsVideoControlRef.current.send(JSON.stringify({ role: 'webclient', value: 'nothing' }));
       setConnectedVideoControl(true);
     };
 
@@ -206,7 +207,7 @@ function BirdViewControls() {
     };
   }, [imageRef]);
 
-  
+
   const pseudoSendMiddleware = (a, b) => {
     console.log('Pseudo Sending', a, b)
     sendControlMessage(a, b);
@@ -224,7 +225,7 @@ function BirdViewControls() {
       {/* AudioStatus Component */}
       <AudioStatus connectedAudio={connectedAudio} playingAudio={playingAudio} />
 
-      {/* VideoPlayer Component */}
+      {/* VideoPlayer Component TODO: Correct sending the wrong method anyways..*/}
       <VideoPlayer
         connectedVideo={connectedVideo}
         imageRef={imageRef}
