@@ -35,9 +35,9 @@ const SettingsDialog = ({ open, onClose, sendControlMessage}) => {
       <DialogTitle>Settings</DialogTitle>
       <DialogContent>
         <Box mb={2}>
-          <IconButton onClick={() => handleRescaleValueChange(-0.1)}><ArrowBackIcon /></IconButton>
+          <IconButton onClick={() => handleRescaleValueChange(-0.035)}><ArrowBackIcon /></IconButton>
           <Typography variant="h6" display="inline" sx={{ mx: 2 }}>Rescale Factor: Unknown</Typography>
-          <IconButton onClick={() => handleRescaleValueChange(0.1)}><ArrowForwardIcon /></IconButton>
+          <IconButton onClick={() => handleRescaleValueChange(0.035)}><ArrowForwardIcon /></IconButton>
         </Box>
 
         {/* <Box mb={2}>
