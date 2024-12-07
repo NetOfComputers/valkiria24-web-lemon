@@ -68,7 +68,9 @@ const VideoPlayer = ({ connectedVideo, imageRef, onSettingsOpen, sendControlMess
                     position: 'absolute',
                     bottom: '10px',
                     left: '10px',
-                    zIndex: 2,
+                    stroke: 'black',
+                    fill: 'white',
+                    zIndex: 20,
                 }}
             >
                 
