@@ -3,12 +3,16 @@ import { AppBar, Toolbar, Typography, Button } from '@mui/material';
 import { Link } from 'react-router-dom';
 
 function Header() {
-  const forDevs = ">/for developers";
+  const forDevs = ">/devs";
   return (
     <AppBar position="static">
       <Toolbar>
         <Typography variant="h6" style={{ flexGrow: 1 }}>
-          NOC
+          <img
+            src='https://bluejims.com/logo512.png'
+            alt="Logo"
+            style={{ height: '40px', marginRight: '10px' }}
+          />
         </Typography>
         <Button color="inherit" component={Link} to="/">
           Home
@@ -20,8 +24,8 @@ function Header() {
           Contact
         </Button>
         <Button color="inherit" component={Link} to="/for-devs">
-          <Typography style={{ textTransform: 'none', color: 'whitesmoke'}} >
-          {forDevs}
+          <Typography style={{ textTransform: 'none', color: 'whitesmoke' }} >
+            {forDevs}
           </Typography>
         </Button>
       </Toolbar>

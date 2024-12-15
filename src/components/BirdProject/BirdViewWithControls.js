@@ -1,9 +1,16 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Container, Box, Typography } from '@mui/material';
+import { Container, Box, Typography, IconButton, Grid } from '@mui/material';
 import AudioStatus from './modules/AudioStatus';
 import VideoPlayer from './modules/VideoPlayerLegacy';
 import SettingsDialog from './modules/SettingsDialog';
 import { useNavigate } from 'react-router-dom';
+import ReplayIcon from '@mui/icons-material/Replay';
+
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+
 
 // import { WS_VIDEO_SERVER_URL, WS_VIDEO_CONTROL_SERVER_URL, WS_AUDIO_SERVER_URL } from './constants';
 const WS_VIDEO_SERVER_URL = 'wss://bluejims.com:8765';
@@ -72,7 +79,11 @@ function BirdViewControls() {
       if (JSON.parse(event.data).action == 'currentStats') {
         try {
           const stats = JSON.parse(event.data).result;
+
+          console.log('updated Stats With', stats)
+
           setStats(stats);
+
         } catch (error) {
           console.error('Error parsing stats message:', error);
         }
@@ -93,6 +104,11 @@ function BirdViewControls() {
       wsVideoControlRef.current.send(message);
     }
   };
+
+  const settingsDialogSendsMessage = (action, value) => {
+    sendControlMessage(action, value)
+    updateStats()
+  }
 
   const handleDeviceIndexChange = (change) => {
     const newIndex = deviceIndex + change;
@@ -120,6 +136,7 @@ function BirdViewControls() {
       /*if (wsVideoRef.current) {
         wsVideoRef.current.send(JSON.stringify({ action: 'currentStats' }));
       }*/
+
       sendControlMessage('currentStats', 'on_currentStats');
     };
 
@@ -138,7 +155,7 @@ function BirdViewControls() {
       // wsVideoRef.current.addEventListener('message', handleStatsMessage);
     }
 
-    const interval = setInterval(fetchStats, 6000);
+    const interval = setInterval(fetchStats, 30000);
 
     return () => {
       if (wsVideoRef.current) {
@@ -240,6 +257,54 @@ function BirdViewControls() {
     };
   }, []);
 
+  const updateStats = () => {
+    sendControlMessage('currentStats', 'on_currentStats')
+  }
+  let xv = 0; // X-axis movement value
+  let yv = 0; // Y-axis movement value
+  let timer = null; // Reference to the running timer
+
+  const handleCameraMove = (direction) => {
+    if (timer) {
+      // If a timer is already running, increment the values
+      if (direction === 'up') {
+        yv -= 10; // Up corresponds to a negative y increment
+      }
+      if (direction === 'down') {
+        yv += 10; // Down corresponds to a positive y increment
+      }
+      if (direction === 'left') {
+        xv -= 10; // Left corresponds to a negative x increment
+      }
+      if (direction === 'right') {
+        xv += 10; // Right corresponds to a positive x increment
+      }
+      return; // Early exit so timer won't reset
+    }
+
+    // Reset values to track initial press
+    if (direction === 'up') {
+      yv -= 10;
+    }
+    if (direction === 'down') {
+      yv += 10;
+    }
+    if (direction === 'left') {
+      xv -= 10;
+    }
+    if (direction === 'right') {
+      xv += 10;
+    }
+
+    // Start the 1-second timer
+    timer = setTimeout(() => {
+      console.log('incrementCrop', { x: xv, y: yv })
+      sendControlMessage('incrementCrop', { x: xv, y: yv });
+      xv = 0; // Reset movement
+      yv = 0;
+      timer = null; // Clear the timer reference
+    }, 3000);
+  };
 
   return (
     <Container maxWidth="md" sx={containerStyles}>
@@ -248,14 +313,22 @@ function BirdViewControls() {
         <Typography variant="body1" sx={subTitleStyles}>
           Lots of birds to see! Enjoy the view and control the camera.
         </Typography>
+        <IconButton onClick={updateStats}><ReplayIcon /></IconButton>
         {JSON.stringify(stats) !== '{}' && (
           <>
+            <Typography variant="body2" sx={statsStyles}>
+              Device: {stats.currentDevice[1].replaceAll('.', ' ')}
+            </Typography>
+            <Typography variant="body2" sx={{ color: '#999', marginTop: '10px' }}>
+              {stats.compression}
+            </Typography>
             <Typography variant="body2" sx={{ color: '#999', marginTop: '10px' }}>
               FPS: {stats.fps}
             </Typography>
             <Typography variant="body2" sx={{ color: '#999', marginTop: '10px' }}>
               MBs: {stats.mbs}
             </Typography>
+
           </>
 
         )}
@@ -274,12 +347,55 @@ function BirdViewControls() {
         onSettingsOpen={handleSettingsOpen}
         handleFullscreenToggle={handleFullscreenToggle}
       />
-
+      {/* Camera Movement Controls */}
+      {/* Camera Movement Controls */}
+      <Box sx={{ marginTop: '20px', textAlign: 'center' }}>
+        <Grid container justifyContent="center">
+          {/* Up Arrow */}
+          <Grid item>
+            <IconButton
+              onClick={() => handleCameraMove('up')}
+              sx={{ padding: -1 }}
+            >
+              <ArrowUpwardIcon fontSize="large" />
+            </IconButton>
+          </Grid>
+          <Grid container justifyContent="center" alignItems="center">
+            {/* Left Arrow */}
+            <Grid item>
+              <IconButton
+                onClick={() => handleCameraMove('left')}
+                sx={{ padding: 1 }}
+              >
+                <ArrowBackIcon fontSize="large" />
+              </IconButton>
+            </Grid>
+            {/* Right Arrow */}
+            <Grid item>
+              <IconButton
+                onClick={() => handleCameraMove('right')}
+                sx={{ padding: 1 }}
+              >
+                <ArrowForwardIcon fontSize="large" />
+              </IconButton>
+            </Grid>
+          </Grid>
+          {/* Down Arrow */}
+          <Grid item>
+            <IconButton
+              onClick={() => handleCameraMove('down')}
+              sx={{ padding: 0 }}
+            >
+              <ArrowDownwardIcon fontSize="large" />
+            </IconButton>
+          </Grid>
+        </Grid>
+      </Box>
       {/* Settings Dialog */}
       <SettingsDialog
         open={settingsOpen}
         onClose={handleSettingsClose}
-        sendControlMessage={sendControlMessage}
+        sendControlMessage={settingsDialogSendsMessage}
       />
     </Container>
   );
@@ -307,6 +423,12 @@ const subTitleStyles = {
   color: '#666',
   maxWidth: '600px',
   margin: 'auto',
+};
+
+const statsStyles = {
+  whiteSpace: 'wrap',
+  color: '#999',
+  marginTop: '10px'
 };
 
 export default BirdViewControls;

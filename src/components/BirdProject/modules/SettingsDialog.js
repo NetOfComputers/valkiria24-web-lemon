@@ -8,14 +8,16 @@ import Brightness7Icon from '@mui/icons-material/Brightness7';
 const SettingsDialog = ({ open, onClose, sendControlMessage}) => {
   const handleBrightnessChange = (change) => {
     // Send brightness change WebSocket message
-    sendControlMessage(change);
+    sendControlMessage('incrementBrightness', change);
   };
 
   const handleRescaleValueChange = (change) => {
     // Send rescale change WebSocket message
     sendControlMessage('incrementRescale', change);
   };
-
+  const handleCompressionValueChange = (change) => {
+    sendControlMessage('incrementCompression', change)
+  }
   const handleChangeFps = (change) => {
     // Send FPS change WebSocket message
     sendControlMessage(change);
@@ -40,17 +42,17 @@ const SettingsDialog = ({ open, onClose, sendControlMessage}) => {
           <IconButton onClick={() => handleRescaleValueChange(0.035)}><ArrowForwardIcon /></IconButton>
         </Box>
 
-        {/* <Box mb={2}>
-          <IconButton onClick={() => handleChangeFps(-1)}><ArrowBackIcon /></IconButton>
-          <Typography variant="h6" display="inline" sx={{ mx: 2 }}>FPS: Unknown</Typography>
-          <IconButton onClick={() => handleChangeFps(1)}><ArrowForwardIcon /></IconButton>
-        </Box> */}
+        <Box mb={2}>
+          <IconButton onClick={() => handleCompressionValueChange(-5)}><ArrowBackIcon /></IconButton>
+          <Typography variant="h6" display="inline" sx={{ mx: 2 }}>COMP: Unknown</Typography>
+          <IconButton onClick={() => handleCompressionValueChange(5)}><ArrowForwardIcon /></IconButton>
+        </Box>
 
-        {/* <Box mb={2}>
-          <IconButton onClick={() => handleBrightnessChange(-0.1)}><Brightness4Icon /></IconButton>
+        <Box mb={2}>
+          <IconButton onClick={() => handleBrightnessChange(-10)}><Brightness4Icon /></IconButton>
           <Typography variant="h6" display="inline" sx={{ mx: 2 }}>Brightness: Unknown</Typography>
-          <IconButton onClick={() => handleBrightnessChange(0.1)}><Brightness7Icon /></IconButton>
-        </Box> */}
+          <IconButton onClick={() => handleBrightnessChange(10)}><Brightness7Icon /></IconButton>
+        </Box>
 
         {/* GET TEST */}
         {/* <Box mb={2}>

@@ -5,8 +5,10 @@ import { Visibility, VisibilityOff } from '@mui/icons-material';
 import CreateABird from '../components/BirdProject/modules/CreateABird';
 //Testing
 import { getAllBirds } from '../services/birdproject/birdControllerClientService';
+import * as serviceWorkerRegistration from '../serviceWorkerRegistration';
 
 function Home() {
+  serviceWorkerRegistration.register();
   const initialWidth = useRef(window.innerWidth);
   const initialHeight = useRef(window.innerHeight);
   const navigate = useNavigate();
@@ -273,6 +275,7 @@ function Home() {
         background: 'linear-gradient(15deg, #124568 0%, #246f64 100%)',
       }}
     >
+      <link rel="manifest" href="./manifest.json" />
 
       <CreateABird
         sx={{
@@ -410,7 +413,7 @@ function Home() {
           }}
           onClick={() => navigate('/admin')}
         >
-          Are you admin?
+          {/* Are you admin? */}
         </Typography>
       </Box>
 
