@@ -44,9 +44,10 @@ function BirdViewControls() {
   };
 
   const handleSettingsOpen = () => {
-    if (document.fullscreenElement) {
+    sendControlMessage('currentStats', 'on_currentStats');
+    /*if (document.fullscreenElement) {
       document.exitFullscreen();
-    }
+    }*/
     setSettingsOpen(true);
   };
 
@@ -74,7 +75,7 @@ function BirdViewControls() {
     };
 
     wsVideoControlRef.current.onmessage = (event) => {
-      console.log('Received message at videoControl', event.data);
+      console.log('Received message at videoControl', '"event.data"');
 
       if (JSON.parse(event.data).action == 'currentStats') {
         try {
@@ -396,6 +397,7 @@ function BirdViewControls() {
         open={settingsOpen}
         onClose={handleSettingsClose}
         sendControlMessage={settingsDialogSendsMessage}
+        stats={stats}
       />
     </Container>
   );
