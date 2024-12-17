@@ -119,15 +119,24 @@ const VideoPlayerLegacy = ({ connectedVideo, imageRef, onSettingsOpen, sendContr
       </IconButton>
 
       {connectedVideo ? (
+        // <img
+        //   ref={imageRef}
+        //   onClick={handleImageClick}
+        //   alt="Live stream"
+        //   style={{
+        //     ...videoStyles,
+        //     transform: isRotated ? 'rotate(180deg)' : 'none',
+        //     height: imageRef.current ? `${imageRef.current.height}px` : 'auto', // Dynamically set height
+        //   }}
+        // />
         <img
-          ref={imageRef}
-          onClick={handleImageClick}
-          alt="Live stream"
-          style={{
-            ...videoStyles,
-            transform: isRotated ? 'rotate(180deg)' : 'none',
-            height: imageRef.current ? `${imageRef.current.height}px` : 'auto', // Dynamically set height
-          }}
+            ref={imageRef}
+            alt="Live stream"
+            onClick={handleImageClick}
+            style={{
+                ...videoStyles,
+                transform: isRotated ? 'rotate(180deg)' : 'none', // Dynamic rotation
+            }}
         />
       ) : (
         <Box display="flex" alignItems="center" flexDirection="column">
