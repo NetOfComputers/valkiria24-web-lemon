@@ -146,6 +146,10 @@ function ActiveServiceAdmin() {
                 required_pumps = [
                     'udpAudioPump'
                 ]
+            }else {
+                required_pumps = [
+                    'sioPump'
+                ]
             }
         }
 

@@ -19,6 +19,7 @@ import Footer from './components/Footer';
 import BirdViewWithControlsScreen from './screens/BirdViewWithControlsScreen.js';
 import BirdViewControls from './screens/BirdViewWithControlsLegacy.js';
 import PitViewWithControlsScreen from './screens/PitViewWithControlsScreen.js';
+
 // import BirdViewRecorder from './screens/BirdViewRecorder.js'
 import AdminLogin from './screens/AdminLogin.js';
 import ProjectArch from './screens/ProjectArch.js';
@@ -67,8 +68,10 @@ function AppRoutes() {
         <Route path="/bird-photo" element={<BirdPhoto/>} /> */}
         {/* <Route path="/bird-view/:token" element={<BirdViewToken/>} />
         <Route path="/bird-view-admin" element={<BirdViewAdmin/>} /> */}
+
+        {/* Other projects */}
       </Routes>
-      <Footer flexGrow={1}/>
+      <Footer flexGrow={1} />
     </Router>
   );
 }

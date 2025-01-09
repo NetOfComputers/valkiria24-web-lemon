@@ -108,7 +108,7 @@ const SettingsDialog = ({ open, onClose, sendControlMessage, stats }) => {
               return (
                 <Box key={controlName} mb={2}>
                   <IconButton
-                    disabled={control.min === null}
+                    disabled={control.min === null && control.data_type!="bool"}
                     onClick={() => handleControlChange(controlName, -(control.step || 1))}
                   >
                     <ArrowBackIcon />
