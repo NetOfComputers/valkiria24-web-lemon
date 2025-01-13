@@ -7,7 +7,7 @@ import {
   CircularProgress,
   Slider,
 } from "@mui/material";
-
+import "@fontsource/pacifico";
 const TunerViewWithPitchJs = () => {
   const [note, setNote] = useState(null);
   const [detectedFrequency, setDetectedFrequency] = useState(null);
@@ -96,8 +96,25 @@ const TunerViewWithPitchJs = () => {
         justifyContent: "center",
       }}
     >
-      <Typography variant="h4" gutterBottom>
-        Guitar Tuner
+      <img
+        src="/tunah.png"
+        alt="Tunah"
+        style={{
+          width: "250px",
+          height: "auto",
+          marginBottom: "20px",
+        }}
+      />
+      <Typography
+        variant="h4"
+        gutterBottom
+        sx={{
+          fontFamily: "'Pacifico', cursive", // Use the "Pacifico" font for a sea-inspired look
+          color: "#0077be", // Ocean blue color
+          textShadow: "1px 1px 2px #005f8e", // Subtle shadow for depth
+        }}
+      >
+        Guitar Tuna'h
       </Typography>
       <Box
         sx={{
@@ -113,7 +130,12 @@ const TunerViewWithPitchJs = () => {
           marginBottom: 4,
         }}
       >
-        <Typography variant="h1" color="primary" sx={{ fontSize: 64 }}>
+        <Typography variant="h1" color="primary" sx={{
+          fontSize: 64,
+          fontFamily: "'Pacifico', cursive", // Use the "Pacifico" font for a sea-inspired look
+          color: "#0077be", // Ocean blue color
+          // textShadow: "1px 1px 1px #005f8e", // Subtle shadow for depth
+        }}>
           {note || "--"}
         </Typography>
         {isTuning && (
@@ -124,10 +146,12 @@ const TunerViewWithPitchJs = () => {
               height: "90%",
               borderRadius: "50%",
               border: "10px solid",
-              borderColor: `rgba(${Math.min(255, 255 - Math.abs(tuningOffset * 10))}, ${Math.min(
-                255,
-                Math.abs(tuningOffset * 10)
-              )}, ${Math.max(0, 255 - Math.abs(tuningOffset * 20))}, 1)`,
+              borderColor: `rgba(
+                ${Math.min(70, 70 + Math.abs(tuningOffset * 5))},  /* Green component for sea green */
+                ${Math.min(200, 200 + Math.abs(tuningOffset * 10))}, /* Light green-blue tones */
+                ${Math.max(100, 255 - Math.abs(tuningOffset * 5))}, /* Blue component for ocean blue */
+                1
+              )`,
               transform: `rotate(${tuningOffset * 3}deg)`,
               transition: "border-color 0.1s, transform 0.1s",
             }}

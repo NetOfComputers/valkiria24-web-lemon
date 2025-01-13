@@ -70,6 +70,7 @@ function AppRoutes() {
         <Route path="/bird-view-admin" element={<BirdViewAdmin/>} /> */}
 
         {/* Other projects */}
+        <Route path="/guitar-tuner" element={<PitViewWithControlsScreen />} />
       </Routes>
       <Footer flexGrow={1} />
     </Router>
