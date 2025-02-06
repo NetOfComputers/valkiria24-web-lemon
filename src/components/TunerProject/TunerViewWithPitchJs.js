@@ -8,11 +8,14 @@ import {
   Slider,
 } from "@mui/material";
 import "@fontsource/pacifico";
+
 const TunerViewWithPitchJs = () => {
   const [note, setNote] = useState(null);
   const [detectedFrequency, setDetectedFrequency] = useState(null);
   const [isTuning, setIsTuning] = useState(false);
   const [tuningOffset, setTuningOffset] = useState(0);
+  const [isFullScreen, setIsFullScreen] = useState(false); // State for full-screen mode
+  const [fullscreen, setFullscreen] = useState(false);
 
   useEffect(() => {
     let audioContext;
@@ -87,13 +90,20 @@ const TunerViewWithPitchJs = () => {
     <Box
       sx={{
         textAlign: "center",
-        padding: 4,
+        padding: fullscreen ? 0 : 4, // Remove padding in full-screen mode
         backgroundColor: "#f5f5f5",
         minHeight: "100vh",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
+        position: fullscreen ? 'absolute' : 'relative', // Absolute position in full-screen
+        top: fullscreen ? 0 : 'auto', // Position it at the top
+        left: fullscreen ? 0 : 'auto', // Position it at the left
+        right: fullscreen ? 0 : 'auto', // Position it at the right
+        bottom: fullscreen ? 0 : 'auto', // Position it at the bottom
+        width: fullscreen ? '100vw' : 'auto', // Full width in full-screen
+        height: fullscreen ? '100vh' : 'auto', // Full height in full-screen
       }}
     >
       <img
@@ -105,17 +115,19 @@ const TunerViewWithPitchJs = () => {
           marginBottom: "20px",
         }}
       />
-      <Typography
-        variant="h4"
-        gutterBottom
-        sx={{
-          fontFamily: "'Pacifico', cursive", // Use the "Pacifico" font for a sea-inspired look
-          color: "#0077be", // Ocean blue color
-          textShadow: "1px 1px 2px #005f8e", // Subtle shadow for depth
-        }}
-      >
-        Guitar Tuna'h
-      </Typography>
+      {!isFullScreen && ( // Hide the header in full-screen mode
+        <Typography
+          variant="h4"
+          gutterBottom
+          sx={{
+            fontFamily: "'Pacifico', cursive",
+            color: "#0077be",
+            textShadow: "1px 1px 2px #005f8e",
+          }}
+        >
+          Guitar Tuna'h
+        </Typography>
+      )}
       <Box
         sx={{
           position: "relative",
@@ -130,12 +142,15 @@ const TunerViewWithPitchJs = () => {
           marginBottom: 4,
         }}
       >
-        <Typography variant="h1" color="primary" sx={{
-          fontSize: 64,
-          fontFamily: "'Pacifico', cursive", // Use the "Pacifico" font for a sea-inspired look
-          color: "#0077be", // Ocean blue color
-          // textShadow: "1px 1px 1px #005f8e", // Subtle shadow for depth
-        }}>
+        <Typography
+          variant="h1"
+          color="primary"
+          sx={{
+            fontSize: 64,
+            fontFamily: "'Pacifico', cursive",
+            color: "#0077be",
+          }}
+        >
           {note || "--"}
         </Typography>
         {isTuning && (
@@ -147,9 +162,9 @@ const TunerViewWithPitchJs = () => {
               borderRadius: "50%",
               border: "10px solid",
               borderColor: `rgba(
-                ${Math.min(70, 70 + Math.abs(tuningOffset * 5))},  /* Green component for sea green */
-                ${Math.min(200, 200 + Math.abs(tuningOffset * 10))}, /* Light green-blue tones */
-                ${Math.max(100, 255 - Math.abs(tuningOffset * 5))}, /* Blue component for ocean blue */
+                ${Math.min(70, 70 + Math.abs(tuningOffset * 5))}, 
+                ${Math.min(200, 200 + Math.abs(tuningOffset * 10))}, 
+                ${Math.max(100, 255 - Math.abs(tuningOffset * 5))}, 
                 1
               )`,
               transform: `rotate(${tuningOffset * 3}deg)`,
@@ -180,6 +195,23 @@ const TunerViewWithPitchJs = () => {
           }}
         />
       </Box>
+      <Box
+        sx={{
+          position: "absolute",
+          top: 16,
+          right: 16,
+        }}
+      >
+        {!fullscreen && (
+          <Button
+            variant="contained"
+            onClick={() => setFullscreen(true)}
+            sx={{ marginTop: 3 }}
+          >
+            Go Full Screen
+          </Button>
+        )}
+      </Box>
       <Button
         variant="contained"
         onClick={() => setIsTuning(!isTuning)}
@@ -189,6 +221,6 @@ const TunerViewWithPitchJs = () => {
       </Button>
     </Box>
   );
-}
+};
 
 export default TunerViewWithPitchJs;
