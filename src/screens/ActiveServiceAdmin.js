@@ -170,7 +170,7 @@ function ActiveServiceAdmin() {
 
         // Listen for the output and update state
         socket.once('handledMethodCall', (dto) => {
-            console.log('Received', dto);
+            console.log('debug Received', dto);
 
             if (JSON.stringify(dto.stderr) == '{}') {
                 dto.stderr = null;

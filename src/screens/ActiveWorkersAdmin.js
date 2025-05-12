@@ -96,27 +96,40 @@ function ActiveWorkersAdmin() {
     navigate(`/active-workers/${workerId}/service/${serviceId}`);
   };
   const handleWorkerOperation = (type, methodName) => {
-
-    // Emit request for the selected method
-    socket.emit('worker_standard_send', {
-      'workerId': workerId,
-      'serviceId': 'serviceId',
-      'catchEventOn': 'main_worker_return',
-      'type': type,
-      'call': methodName,
-      'args': null,
-      'feedback': null,
-      'shell': true
-    });
+    const clicked_method = {
+      "workerId": workerId,
+      "workerName": workerId,
+      "service_method": methodName,
+      "callsback": "main_worker_return",
+      "data": {},
+      "metadata": { "fake": "metadata" },
+    }
+    // Emit request to worker api for the selected method
+    socket.emit('main_service_send', clicked_method);
 
     // Listen for the output and update state
     socket.once('main_worker_return', (dto) => {
-      console.log('Received', dto);
+      console.log('debug Received', dto);
 
+      if (JSON.stringify(dto.stderr) == '{}') {
+          dto.stderr = null;
+      }
+
+      let messageToDisplay = dto.stderr;
+      const firstResponse = dto.stdout[Object.keys(dto.stdout)[0]];
+      if (!dto.stderr && firstResponse) {
+
+          // if (firstResponse.responseObject == 'json') {
+          messageToDisplay = JSON.stringify(firstResponse, null, 4);
+          // }
+
+      }
+
+      // dto.stderr || JSON.stringify(dto.stdout, null, 4)
       // Prepare output message based on stdout and stderr
       const newOutput = {
-        type: dto.stderr ? 'error' : 'success',
-        message: dto.stderr || dto.stdout
+          type: dto.stderr ? 'error' : 'success',
+          message: messageToDisplay
       };
 
       // Do not accumulate outputs
