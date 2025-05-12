@@ -104,6 +104,16 @@ function ActiveWorkersAdmin() {
       "data": {},
       "metadata": { "fake": "metadata" },
     }
+
+    if (type === 'input') {
+      // Show input field for user to enter data
+      const userInput = window.prompt(`Enter input for ${methodName}:`);
+      if (userInput !== null) {
+        clicked_method.data = { "command": userInput };
+      }
+    }
+
+
     // Emit request to worker api for the selected method
     socket.emit('main_service_send', clicked_method);
 
@@ -121,6 +131,7 @@ function ActiveWorkersAdmin() {
 
           // if (firstResponse.responseObject == 'json') {
           messageToDisplay = JSON.stringify(firstResponse, null, 4);
+          messageToDisplay = messageToDisplay.replace(/\\n/g, '\n');
           // }
 
       }
